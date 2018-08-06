@@ -42,18 +42,6 @@ class MyApp < Ovto::App
     end
   end
 
-  class TaskForm < Ovto::Component
-    def render
-      o 'div' do
-        o 'input', type: 'text', id: 'new_task_title'
-        o 'input', type: 'button', value: 'Add', onclick: ->{
-          title = `document.querySelector('#new_task_title').value`
-          actions.create_task(title: title)
-        }
-      end
-    end
-  end
-
   class View < Ovto::Component
     def render(state:)
       o 'div' do
@@ -65,6 +53,18 @@ class MyApp < Ovto::App
           end
         end
         o TaskForm
+      end
+    end
+  end
+
+  class TaskForm < Ovto::Component
+    def render
+      o 'div' do
+        o 'input', type: 'text', id: 'new_task_title'
+        o 'input', type: 'button', value: 'Add', onclick: ->{
+          title = `document.querySelector('#new_task_title').value`
+          actions.create_task(title: title)
+        }
       end
     end
   end
