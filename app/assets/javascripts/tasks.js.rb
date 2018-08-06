@@ -11,6 +11,16 @@ class MyApp < Ovto::App
     item :created_at
     item :updated_at
     item :url
+
+    # Update the `task` in `tasks`
+    def self.merge(tasks, task)
+      tasks.map{|t| t.id == task.id ? task : t}
+    end
+
+    # Remove `task` from `tasks`
+    def self.delete(tasks, task)
+      tasks.reject{|t| t.id == task.id}
+    end
   end
 
   class State < Ovto::State
@@ -34,8 +44,27 @@ class MyApp < Ovto::App
           due_date: '2018-07-30'
         }
       }
-      return Ovto.fetch('/tasks.json', params).then {|json|
+      return Ovto.fetch('/tasks.json', 'POST', params).then {|json|
         {tasks: state.tasks + [Task.new(**json)]}
+      }.fail {|e|
+        console.log("create_task", e)
+      }
+    end
+
+    def update_task(state:, task:, done:)
+      params = {
+        task: {
+          done: (done ? '1' : '0'),
+        },
+        _method: "patch",
+      }
+      return Ovto.fetch("/tasks/#{task.id}.json", 'PUT', params).then {|json|
+        updated_task = Task.new(**json)
+        if updated_task.done
+          {tasks: Task.delete(state.tasks, updated_task)}
+        else
+          {tasks: Task.merge(state.tasks, updated_task)}
+        end
       }.fail {|e|
         console.log("create_task", e)
       }
@@ -81,7 +110,7 @@ class MyApp < Ovto::App
         o 'span.CompleteTaskButton' do
           o 'a', {
             href: "#",
-            onclick: ->{ actions.complete_task(task: task)}
+            onclick: ->{ actions.update_task(task: task, done: true); false }
           }, "○"
         end
       end
