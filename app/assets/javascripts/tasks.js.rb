@@ -69,7 +69,7 @@ class MyApp < Ovto::App
     end
   end
 
-  def init
+  def startup
     actions.get_tasks
   end
 end
