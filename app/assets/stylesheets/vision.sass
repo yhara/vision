@@ -1,0 +1,68 @@
+// Small devices
+@media (max-width: 1023px)
+  h1
+    font-size: 2.4rem
+  h2
+    font-size: 2.0rem
+
+// Large devices
+@media (min-width: 1024px)
+  h1
+    font-size: 3.2rem
+  h2
+    font-size: 2.4rem
+
+*
+  box-sizing: border-box
+html
+  font-size: 62.5%
+body
+  // Copied form Bulma
+  font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif
+  font-size: 16px  // We cannot use `rem` here due to chrome rem bug
+code
+  font-family: Monaco, monospace
+  font-size: 1.4rem
+div
+  margin: 0
+  padding: 0
+
+h1
+  text-align: center
+
+.TaskList
+  width: 400px
+  margin: auto
+  ul
+    margin: 0
+    padding: 0
+    list-style: none
+
+.Task
+  padding: 0.2rem
+  font-size: 2.4rem
+  border: 1px solid hsl(0, 0, 86%)
+  &:hover
+    background: hsl(0, 0, 86%)
+
+  .CompleteTaskButton
+    margin-right: 0.4rem
+    a
+      text-decoration: none
+      color: black
+      &:hover
+        color: red
+
+.TaskForm
+  width: 400px
+  margin: auto
+  display: flex
+
+  #new-task-title
+    flex-grow: 1
+
+  #add-task-button
+    width: 50px
+    margin: 5px
+    padding: 0
+    height: 100%

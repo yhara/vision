@@ -45,26 +45,57 @@ class MyApp < Ovto::App
   class View < Ovto::Component
     def render(state:)
       o 'div' do
-        o 'ul' do
-          state.tasks.each do |task|
-            o 'li' do
-              o 'a', {href: task.url}, task.title
-            end
-          end
-        end
+        o 'h1', 'Vision'
+        o TaskList, tasks: state.tasks
         o TaskForm
       end
     end
-  end
 
-  class TaskForm < Ovto::Component
-    def render
-      o 'div' do
-        o 'input', type: 'text', id: 'new_task_title'
-        o 'input', type: 'button', value: 'Add', onclick: ->{
-          title = `document.querySelector('#new_task_title').value`
-          actions.create_task(title: title)
-        }
+    class TaskList < Ovto::Component
+      def render(tasks: tasks)
+        o '.TaskList' do
+          o 'ul' do
+            tasks.each do |task|
+              o 'li' do
+                o Task, {task: task}
+              end
+            end
+          end
+        end
+      end
+    end
+
+    class Task < Ovto::Component
+      def render(task: task)
+        o '.Task' do
+          o 'div', onclick: ->{ p task } do
+            o CompleteTaskButton, task: task
+            o 'span', task.title
+          end
+        end
+      end
+    end
+
+    class CompleteTaskButton < Ovto::Component
+      def render(task: task)
+        o 'span.CompleteTaskButton' do
+          o 'a', {
+            href: "#",
+            onclick: ->{ actions.complete_task(task: task)}
+          }, "○"
+        end
+      end
+    end
+
+    class TaskForm < Ovto::Component
+      def render
+        o '.TaskForm' do
+          o 'input#new-task-title', type: 'text'
+          o 'input#add-task-button', type: 'button', value: 'Add', onclick: ->{
+            title = `document.querySelector('#new-task-title').value`
+            actions.create_task(title: title)
+          }
+        end
       end
     end
   end
