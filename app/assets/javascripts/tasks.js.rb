@@ -74,4 +74,4 @@ class MyApp < Ovto::App
   end
 end
 
-MyApp.run(id: 'ovto-view') if `document.querySelector('#ovto-view')`
+MyApp.run(id: 'ovto-view') if `location.pathname == "/"`
