@@ -36,12 +36,12 @@ class MyApp < Ovto::App
       }
     end
 
-    def create_task(state:, title:)
+    def create_task(state:, title:, due_date:)
       params = {
         task: {
           title: title,
           done: '0',
-          due_date: '2018-07-30'
+          due_date: due_date,
         }
       }
       return Ovto.fetch('/tasks.json', 'POST', params).then {|json|
@@ -96,11 +96,10 @@ class MyApp < Ovto::App
 
     class Task < Ovto::Component
       def render(task: task)
-        o '.Task' do
-          o 'div', onclick: ->{ p task } do
-            o CompleteTaskButton, task: task
-            o 'span', task.title
-          end
+        o '.Task', onclick: ->{ p task } do
+          o CompleteTaskButton, task: task
+          o 'span.title', task.title
+          o 'span.due-date', task.due_date
         end
       end
     end
@@ -120,9 +119,11 @@ class MyApp < Ovto::App
       def render
         o '.TaskForm' do
           o 'input#new-task-title', type: 'text'
+          o 'input#new-task-due-date', type: 'date'
           o 'input#add-task-button', type: 'button', value: 'Add', onclick: ->{
             title = `document.querySelector('#new-task-title').value`
-            actions.create_task(title: title)
+            due_date = `document.querySelector('#new-task-due-date').value`
+            actions.create_task(title: title, due_date: due_date)
           }
         end
       end
