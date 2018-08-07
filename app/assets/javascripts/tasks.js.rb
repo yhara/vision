@@ -1,6 +1,7 @@
 require 'opal'
 require 'ovto'
 require 'json'
+require 'set'
 
 class MyApp < Ovto::App
   class Task < Ovto::State
@@ -75,8 +76,23 @@ class MyApp < Ovto::App
     def render(state:)
       o 'div' do
         o 'h1', 'Vision'
-        o TaskList, tasks: state.tasks
+        o TaskListByDueDate, tasks: state.tasks
         o TaskForm
+      end
+    end
+
+    class TaskListByDueDate < Ovto::Component
+      def render(tasks: tasks)
+        task_groups = tasks.to_set.classify(&:due_date)
+        sorted_groups = task_groups.sort_by{|due_date, tasks|
+          due_date || "2001-01-01"
+        }
+        o '.TaskListByDueDate' do
+          sorted_groups.each do |due_date, tasks|
+            o 'h2', due_date || 'Unsorted'
+            o TaskList, tasks: tasks
+          end
+        end
       end
     end
 
