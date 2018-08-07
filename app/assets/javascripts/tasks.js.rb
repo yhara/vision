@@ -2,6 +2,7 @@ require 'opal'
 require 'ovto'
 require 'json'
 require 'set'
+require 'date'
 
 class MyApp < Ovto::App
   class Task < Ovto::State
@@ -12,6 +13,13 @@ class MyApp < Ovto::App
     item :created_at
     item :updated_at
     item :url
+
+    # Convert the string returned by the server into Date class
+    def due_date
+      if @values[:due_date]
+        @date_due_date ||= Date.parse(@values[:due_date])
+      end
+    end
 
     # Update the `task` in `tasks`
     def self.merge(tasks, task)
@@ -83,13 +91,19 @@ class MyApp < Ovto::App
 
     class TaskListByDueDate < Ovto::Component
       def render(tasks: tasks)
-        task_groups = tasks.to_set.classify(&:due_date)
+        task_groups = tasks.to_set.classify{|t|
+          if t.due_date.nil? || t.due_date < Date.today
+            nil
+          else
+            t.due_date
+          end
+        }
         sorted_groups = task_groups.sort_by{|due_date, tasks|
-          due_date || "2001-01-01"
+          due_date || Date.new(2000,1,1)
         }
         o '.TaskListByDueDate' do
           sorted_groups.each do |due_date, tasks|
-            o 'h2', due_date || 'Unsorted'
+            o 'h2', due_date || 'Unsorted/Outdated'
             o TaskList, tasks: tasks
           end
         end
@@ -115,7 +129,7 @@ class MyApp < Ovto::App
         o '.Task', onclick: ->{ p task } do
           o CompleteTaskButton, task: task
           o 'span.title', task.title
-          o 'span.due-date', task.due_date
+          o 'span.due-date', task.due_date.to_s
         end
       end
     end
