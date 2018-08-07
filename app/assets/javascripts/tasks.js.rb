@@ -115,7 +115,7 @@ class MyApp < Ovto::App
         o '.TaskList' do
           o 'ul' do
             tasks.each do |task|
-              o 'li' do
+              o 'li', key: task.id do
                 o Task, {task: task}
               end
             end
