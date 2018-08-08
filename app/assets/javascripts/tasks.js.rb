@@ -36,8 +36,14 @@ class MyApp < Ovto::App
     end
   end
 
+  class DragInfo < Ovto::State
+    item :target_date, default: nil
+    item :dragover_occurred, default: false
+  end
+
   class State < Ovto::State
     item :tasks, default: []
+    item :drag_info, default: DragInfo.new
   end
 
   class Actions < Ovto::Actions
@@ -90,6 +96,20 @@ class MyApp < Ovto::App
         console.log("update_task", e)
       }
     end
+
+    def drag_enter(state:, target_date:)
+      return {drag_info: state.drag_info.merge(target_date: target_date, dragover_occurred: false)}
+    end
+
+    def drag_over(state:, target_date:)
+      return {drag_info: state.drag_info.merge(dragover_occurred: true)}
+    end
+
+    def drag_leave(state:, target_date:)
+      if state.drag_info.dragover_occurred
+        return {drag_info: state.drag_info.merge(target_date: nil, dragover_occurred: false)}
+      end
+    end
   end
 
   class View < Ovto::Component
@@ -124,11 +144,25 @@ class MyApp < Ovto::App
           }
         end
         o '.TaskListByDueDate' do
-          task_groups.each do |g|
-            o 'h2', g[:label]
-            o TaskList, tasks: g[:tasks]
-            o TaskForm, due_date: g[:due_date]
+          task_groups.each do |group|
+            o TasksOfADay, **group
           end
+        end
+      end
+    end
+
+    class TasksOfADay < Ovto::Component
+      def render(state:, label:, due_date:, tasks:)
+        is_hovered = state.drag_info.target_date == due_date
+        o '.TasksOfADay', {
+          ondragenter: ->{ actions.drag_enter(target_date: due_date) },
+          ondragover: ->{ actions.drag_over(target_date: due_date) },
+          ondragleave: ->{ actions.drag_leave(target_date: due_date) },
+          class: (is_hovered && 'hover')
+        } do
+          o 'h2', label
+          o TaskList, tasks: tasks
+          o TaskForm, due_date: due_date
         end
       end
     end
@@ -149,7 +183,7 @@ class MyApp < Ovto::App
 
     class TaskView < Ovto::Component
       def render(task:)
-        o '.TaskView', onclick: ->{ p task } do
+        o '.TaskView', draggable: true, onclick: ->{ p task } do
           o CompleteTaskButton, task: task
           o 'span.title', task.title
           o 'span.due-date', task.due_date.to_s
