@@ -93,7 +93,6 @@ class MyApp < Ovto::App
       o '.Main' do
         o 'h1', 'Vision'
         o TaskListByDueDate, tasks: state.tasks
-        o TaskForm
       end
     end
 
@@ -113,6 +112,7 @@ class MyApp < Ovto::App
           sorted_groups.each do |due_date, tasks|
             o 'h2', due_date || 'Unsorted/Outdated'
             o TaskList, tasks: tasks
+            o TaskForm, due_date: due_date
           end
         end
       end
@@ -154,13 +154,15 @@ class MyApp < Ovto::App
     end
 
     class TaskForm < Ovto::Component
-      def render
+      def render(due_date: nil)
         o '.TaskForm' do
-          o 'input#new-task-title', type: 'text'
-          o 'input#new-task-due-date', type: 'date'
-          o 'input#add-task-button', type: 'button', value: 'Add', onclick: ->{
-            title = `document.querySelector('#new-task-title').value`
-            due_date = `document.querySelector('#new-task-due-date').value`
+          id_title = "new-task-#{due_date}-title"
+          id_due_date = "new-task-#{due_date}-due-date" 
+          o 'input.new-task-title', id: id_title, type: 'text'
+          o 'input.new-task-due-date', id: id_due_date, type: 'date', value: due_date
+          o 'input.add-task-button', type: 'button', value: 'Add', onclick: ->{
+            title = `document.querySelector('#'+id_title).value`
+            due_date = `document.querySelector('#'+id_due_date).value`
             actions.request_create_task(title: title, due_date: due_date)
           }
         end
