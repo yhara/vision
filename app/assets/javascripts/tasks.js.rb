@@ -103,11 +103,11 @@ class MyApp < Ovto::App
           if t.due_date.nil? || t.due_date < Date.today
             nil
           else
-            t.due_date
+            t.due_date.to_s
           end
         }
-        sorted_groups = task_groups.sort_by{|due_date, tasks|
-          due_date || Date.new(2000,1,1)
+        sorted_groups = task_groups.sort_by{|_, tasks|
+          tasks.first.due_date || Date.new(2000,1,1)
         }
         o '.TaskListByDueDate' do
           sorted_groups.each do |due_date, tasks|
