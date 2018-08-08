@@ -82,7 +82,7 @@ class MyApp < Ovto::App
 
   class View < Ovto::Component
     def render(state:)
-      o 'div' do
+      o '.Main' do
         o 'h1', 'Vision'
         o TaskListByDueDate, tasks: state.tasks
         o TaskForm

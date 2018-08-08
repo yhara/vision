@@ -1,7 +1,19 @@
 $light-grey: hsl(0, 0, 86%)
 
+// Narrow devices
+@media (max-width: 399px)
+  .Main
+    width: 100%
+  h1
+    font-size: 2.4rem
+  h2
+    font-size: 2.0rem
+
 // Small devices
-@media (max-width: 1023px)
+@media (min-width: 400px) and (max-width: 1023px)
+  .Main
+    width: 400px
+    margin: auto
   h1
     font-size: 2.4rem
   h2
@@ -9,6 +21,9 @@ $light-grey: hsl(0, 0, 86%)
 
 // Large devices
 @media (min-width: 1024px)
+  .Main
+    width: 400px
+    margin: auto
   h1
     font-size: 3.2rem
   h2
@@ -33,7 +48,6 @@ h1
   text-align: center
 
 .TaskList
-  width: 400px
   margin: auto
   ul
     margin: 0
