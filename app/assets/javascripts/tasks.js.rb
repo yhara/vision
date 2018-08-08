@@ -30,6 +30,10 @@ class MyApp < Ovto::App
     def self.delete(tasks, task)
       tasks.reject{|t| t.id == task.id}
     end
+
+    def self.unsorted_or_outdated(tasks)
+      tasks.select{|t| t.due_date.nil? || t.due_date < Date.today}
+    end
   end
 
   class State < Ovto::State
@@ -98,18 +102,15 @@ class MyApp < Ovto::App
 
     class TaskListByDueDate < Ovto::Component
       def render(tasks:)
-        task_groups = tasks.to_set.classify{|t|
-          if t.due_date.nil? || t.due_date < Date.today
-            nil
-          else
-            t.due_date.to_s
-          end
-        }
-        sorted_groups = task_groups.sort_by{|_, tasks|
-          tasks.first.due_date || Date.new(2000,1,1)
-        }
+        task_groups = [
+          [nil, MyApp::Task.unsorted_or_outdated(tasks)]
+        ]
+        7.times.each do |i|
+          date = Date.today + i
+          task_groups << [date, tasks.select{|t| t.due_date == date}]
+        end
         o '.TaskListByDueDate' do
-          sorted_groups.each do |due_date, tasks|
+          task_groups.each do |due_date, tasks|
             o 'h2', due_date || 'Unsorted/Outdated'
             o TaskList, tasks: tasks
             o TaskForm, due_date: due_date
