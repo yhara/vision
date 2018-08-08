@@ -75,7 +75,7 @@ class MyApp < Ovto::App
           {tasks: Task.merge(state.tasks, updated_task)}
         end
       }.fail {|e|
-        console.log("create_task", e)
+        console.log("update_task", e)
       }
     end
   end
