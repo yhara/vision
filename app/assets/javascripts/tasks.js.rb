@@ -98,7 +98,7 @@ class MyApp < Ovto::App
     end
 
     class TaskListByDueDate < Ovto::Component
-      def render(tasks: tasks)
+      def render(tasks:)
         task_groups = tasks.to_set.classify{|t|
           if t.due_date.nil? || t.due_date < Date.today
             nil
@@ -119,7 +119,7 @@ class MyApp < Ovto::App
     end
 
     class TaskList < Ovto::Component
-      def render(tasks: tasks)
+      def render(tasks:)
         o '.TaskList' do
           o 'ul' do
             tasks.each do |task|
@@ -133,7 +133,7 @@ class MyApp < Ovto::App
     end
 
     class Task < Ovto::Component
-      def render(task: task)
+      def render(task:)
         o '.Task', onclick: ->{ p task } do
           o CompleteTaskButton, task: task
           o 'span.title', task.title
@@ -143,7 +143,7 @@ class MyApp < Ovto::App
     end
 
     class CompleteTaskButton < Ovto::Component
-      def render(task: task)
+      def render(task:)
         o 'span.CompleteTaskButton' do
           o 'a', {
             href: "#",
