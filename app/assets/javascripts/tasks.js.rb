@@ -105,7 +105,7 @@ class MyApp < Ovto::App
         task_groups = [
           { label: 'Unsorted/Outdated',
             due_date: nil,
-            tasks: MyApp::Task.unsorted_or_outdated(tasks) }
+            tasks: Task.unsorted_or_outdated(tasks) }
         ]
         7.times.each do |i|
           date = Date.today + i
@@ -137,7 +137,7 @@ class MyApp < Ovto::App
           o 'ul' do
             tasks.each do |task|
               o 'li', key: task.id do
-                o Task, {task: task}
+                o TaskView, {task: task}
               end
             end
           end
@@ -145,9 +145,9 @@ class MyApp < Ovto::App
       end
     end
 
-    class Task < Ovto::Component
+    class TaskView < Ovto::Component
       def render(task:)
-        o '.Task', onclick: ->{ p task } do
+        o '.TaskView', onclick: ->{ p task } do
           o CompleteTaskButton, task: task
           o 'span.title', task.title
           o 'span.due-date', task.due_date.to_s
