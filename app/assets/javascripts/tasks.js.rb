@@ -93,6 +93,8 @@ class MyApp < Ovto::App
   end
 
   class View < Ovto::Component
+    DATE_UNSORTED = Date.new(2000, 1, 1)
+
     def render(state:)
       o '.Main' do
         o 'h1', 'Vision'
@@ -104,7 +106,7 @@ class MyApp < Ovto::App
       def render(tasks:)
         task_groups = [
           { label: 'Unsorted/Outdated',
-            due_date: nil,
+            due_date: DATE_UNSORTED,
             tasks: Task.unsorted_or_outdated(tasks) }
         ]
         7.times.each do |i|
@@ -167,12 +169,12 @@ class MyApp < Ovto::App
     end
 
     class TaskForm < Ovto::Component
-      def render(due_date: nil)
+      def render(due_date:)
         o '.TaskForm' do
           id_title = "new-task-#{due_date}-title"
           id_due_date = "new-task-#{due_date}-due-date" 
           o 'input.new-task-title', id: id_title, type: 'text'
-          o 'input.new-task-due-date', id: id_due_date, type: 'date', value: due_date
+          o 'input.new-task-due-date', id: id_due_date, type: 'date', value: (due_date if due_date != DATE_UNSORTED)
           o 'input.add-task-button', type: 'button', value: 'Add', onclick: ->{
             title = `document.querySelector('#'+id_title).value`
             due_date = `document.querySelector('#'+id_due_date).value`
