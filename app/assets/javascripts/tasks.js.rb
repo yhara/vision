@@ -39,13 +39,17 @@ class MyApp < Ovto::App
   class Actions < Ovto::Actions
     def get_tasks(state:)
       return Ovto.fetch('/tasks.json').then {|json|
-        {tasks: json.map{|x| Task.new(**x)}}
+        actions.receive_tasks(tasks: json.map{|x| Task.new(**x)})
       }.fail {|e|
         console.log("get_tasks", e)
       }
     end
 
-    def create_task(state:, title:, due_date:)
+    def receive_tasks(state:, tasks:)
+      return {tasks: tasks}
+    end
+
+    def request_create_task(state:, title:, due_date:)
       params = {
         task: {
           title: title,
@@ -54,10 +58,14 @@ class MyApp < Ovto::App
         }
       }
       return Ovto.fetch('/tasks.json', 'POST', params).then {|json|
-        {tasks: state.tasks + [Task.new(**json)]}
+        actions.receive_created_task(task: Task.new(**json))
       }.fail {|e|
-        console.log("create_task", e)
+        console.log("request_create_task", e)
       }
+    end
+
+    def receive_created_task(state:, task:)
+      return {tasks: state.tasks + [task]}
     end
 
     def update_task(state:, task:, done:)
@@ -153,7 +161,7 @@ class MyApp < Ovto::App
           o 'input#add-task-button', type: 'button', value: 'Add', onclick: ->{
             title = `document.querySelector('#new-task-title').value`
             due_date = `document.querySelector('#new-task-due-date').value`
-            actions.create_task(title: title, due_date: due_date)
+            actions.request_create_task(title: title, due_date: due_date)
           }
         end
       end
