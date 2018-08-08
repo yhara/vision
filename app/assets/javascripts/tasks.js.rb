@@ -103,17 +103,29 @@ class MyApp < Ovto::App
     class TaskListByDueDate < Ovto::Component
       def render(tasks:)
         task_groups = [
-          [nil, MyApp::Task.unsorted_or_outdated(tasks)]
+          { label: 'Unsorted/Outdated',
+            due_date: nil,
+            tasks: MyApp::Task.unsorted_or_outdated(tasks) }
         ]
         7.times.each do |i|
           date = Date.today + i
-          task_groups << [date, tasks.select{|t| t.due_date == date}]
+          prefix = case i
+                   when 0 then 'Today '
+                   when 1 then 'Tomorrow '
+                   else ''
+                   end
+          label = prefix + date.strftime('%a %-m/%-d')
+          task_groups << {
+            label: label,
+            due_date: date,
+            tasks: tasks.select{|t| t.due_date == date}
+          }
         end
         o '.TaskListByDueDate' do
-          task_groups.each do |due_date, tasks|
-            o 'h2', due_date || 'Unsorted/Outdated'
-            o TaskList, tasks: tasks
-            o TaskForm, due_date: due_date
+          task_groups.each do |g|
+            o 'h2', g[:label]
+            o TaskList, tasks: g[:tasks]
+            o TaskForm, due_date: g[:due_date]
           end
         end
       end
