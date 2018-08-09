@@ -4,6 +4,18 @@ require 'json'
 require 'set'
 require 'date'
 
+# Patch to fix Date#== for Opal < 0.11
+class Date
+  def ==(other)
+    return false unless Date === other
+    %x{
+      var a = #@date, b = other.date;
+      return (a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate());
+    }
+  end
+  alias eql? ==
+end
+
 class MyApp < Ovto::App
   class Task < Ovto::State
     item :id
@@ -37,6 +49,7 @@ class MyApp < Ovto::App
   end
 
   class DragInfo < Ovto::State
+    item :task_id, default: nil
     item :target_date, default: nil
     item :dragover_occurred, default: false
   end
@@ -78,23 +91,34 @@ class MyApp < Ovto::App
       return {tasks: state.tasks + [task]}
     end
 
-    def update_task(state:, task:, done:)
+    def request_update_task(state:, task:, done: nil, due_date: nil)
       params = {
-        task: {
-          done: (done ? '1' : '0'),
-        },
         _method: "patch",
+        task: {}
       }
+      updated_task = task.merge({})
+      if !done.nil?
+        params[:task][:done] = (done ? '1' : '0')
+        updated_task = updated_task.merge(done: done)
+      end
+      if due_date
+        params[:task][:due_date] = due_date
+        updated_task = updated_task.merge(due_date: due_date)
+      end
       return Ovto.fetch("/tasks/#{task.id}.json", 'PUT', params).then {|json|
-        updated_task = Task.new(**json)
-        if updated_task.done
-          {tasks: Task.delete(state.tasks, updated_task)}
-        else
-          {tasks: Task.merge(state.tasks, updated_task)}
-        end
+        # OK.
       }.fail {|e|
         console.log("update_task", e)
       }
+      if done
+        return {tasks: Task.delete(state.tasks, update_task)}
+      else
+        return {tasks: Task.merge(state.tasks, updated_task)}
+      end
+    end
+
+    def drag_start(state:, task:)
+      return {drag_info: state.drag_info.merge(task_id: task.id)}
     end
 
     def drag_enter(state:, target_date:)
@@ -109,6 +133,20 @@ class MyApp < Ovto::App
       if state.drag_info.dragover_occurred
         return {drag_info: state.drag_info.merge(target_date: nil, dragover_occurred: false)}
       end
+    end
+
+    def drag_drop(state:)
+      task = state.tasks.find{|t| t.id == state.drag_info.task_id}
+      date = state.drag_info.target_date 
+      updated_task = task.dup
+      if date && date.to_s != task.due_date.to_s
+        updated_task = task.merge(due_date: date)
+        actions.request_update_task(task: task, due_date: date)
+      end
+      return {
+        drag_info: state.drag_info.merge(task_id: nil, target_date: nil, dragover_occurred: false),
+        tasks: Task.merge(state.tasks, updated_task)
+      }
     end
   end
 
@@ -156,8 +194,9 @@ class MyApp < Ovto::App
         is_hovered = state.drag_info.target_date == due_date
         o '.TasksOfADay', {
           ondragenter: ->{ actions.drag_enter(target_date: due_date) },
-          ondragover: ->{ actions.drag_over(target_date: due_date) },
+          ondragover: ->(e){ actions.drag_over(target_date: due_date); e.preventDefault() },
           ondragleave: ->{ actions.drag_leave(target_date: due_date) },
+          ondrop: ->(e){ actions.drag_drop() },
           class: (is_hovered && 'hover')
         } do
           o 'h2', label
@@ -183,7 +222,10 @@ class MyApp < Ovto::App
 
     class TaskView < Ovto::Component
       def render(task:)
-        o '.TaskView', draggable: true, onclick: ->{ p task } do
+        o '.TaskView', {
+          draggable: true,
+          ondragstart: ->{ actions.drag_start(task: task) },
+        } do
           o CompleteTaskButton, task: task
           o 'span.title', task.title
           o 'span.due-date', task.due_date.to_s
@@ -196,7 +238,7 @@ class MyApp < Ovto::App
         o 'span.CompleteTaskButton' do
           o 'a', {
             href: "#",
-            onclick: ->{ actions.update_task(task: task, done: true); false }
+            onclick: ->{ actions.request_update_task(task: task, done: true); false }
           }, "○"
         end
       end
