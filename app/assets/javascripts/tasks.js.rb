@@ -108,13 +108,13 @@ class MyApp < Ovto::App
         params[:task][:due_date] = updates[:due_date].to_s
         updated_task = updated_task.merge(due_date: updates[:due_date])
       end
-      return Ovto.fetch("/tasks/#{task.id}.json", 'PUT', params).then {|json|
+      Ovto.fetch("/tasks/#{task.id}.json", 'PUT', params).then {|json|
         # OK.
       }.fail {|e|
         console.log("update_task", e)
       }
-      if done
-        return {tasks: Task.delete(state.tasks, update_task)}
+      if updated_task.done
+        return {tasks: Task.delete(state.tasks, updated_task)}
       else
         return {tasks: Task.merge(state.tasks, updated_task)}
       end
