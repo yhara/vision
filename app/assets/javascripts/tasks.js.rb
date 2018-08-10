@@ -214,7 +214,7 @@ class MyApp < Ovto::App
           o 'ul' do
             tasks.each do |task|
               o 'li', key: task.id do
-                o TaskView, {task: task}
+                o TaskListItem, {task: task}
               end
             end
           end
@@ -222,9 +222,9 @@ class MyApp < Ovto::App
       end
     end
 
-    class TaskView < Ovto::Component
+    class TaskListItem < Ovto::Component
       def render(task:)
-        o '.TaskView', {
+        o '.TaskListItem', {
           draggable: true,
           ondragstart: ->{ actions.drag_start(task: task) },
         } do
