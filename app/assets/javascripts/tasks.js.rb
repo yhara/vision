@@ -17,6 +17,9 @@ class Date
 end
 
 class MyApp < Ovto::App
+  # Dummy date for unscheduled tasks
+  DATE_UNSORTED = Date.new(2000, 1, 1)
+
   class Task < Ovto::State
     item :id
     item :title
@@ -91,19 +94,19 @@ class MyApp < Ovto::App
       return {tasks: state.tasks + [task]}
     end
 
-    def request_update_task(state:, task:, done: nil, due_date: nil)
+    def request_update_task(state:, task:, updates:)
       params = {
         _method: "patch",
         task: {}
       }
       updated_task = task.merge({})
-      if !done.nil?
-        params[:task][:done] = (done ? '1' : '0')
-        updated_task = updated_task.merge(done: done)
+      if updates.key?(:done)
+        params[:task][:done] = (updates[:done] ? '1' : '0')
+        updated_task = updated_task.merge(done: updates[:done])
       end
-      if due_date
-        params[:task][:due_date] = due_date
-        updated_task = updated_task.merge(due_date: due_date)
+      if updates.key?(:due_date)
+        params[:task][:due_date] = updates[:due_date].to_s
+        updated_task = updated_task.merge(due_date: updates[:due_date])
       end
       return Ovto.fetch("/tasks/#{task.id}.json", 'PUT', params).then {|json|
         # OK.
@@ -139,9 +142,10 @@ class MyApp < Ovto::App
       task = state.tasks.find{|t| t.id == state.drag_info.task_id}
       date = state.drag_info.target_date 
       updated_task = task.dup
-      if date && date.to_s != task.due_date.to_s
-        updated_task = task.merge(due_date: date)
-        actions.request_update_task(task: task, due_date: date)
+      if date && date != task.due_date
+        new_date = (date == DATE_UNSORTED ? nil : date)
+        updated_task = task.merge(due_date: new_date)
+        actions.request_update_task(task: task, updates: {due_date: new_date})
       end
       return {
         drag_info: state.drag_info.merge(task_id: nil, target_date: nil, dragover_occurred: false),
@@ -151,8 +155,6 @@ class MyApp < Ovto::App
   end
 
   class View < Ovto::Component
-    DATE_UNSORTED = Date.new(2000, 1, 1)
-
     def render(state:)
       o '.Main' do
         o 'h1', 'Vision'
@@ -238,7 +240,7 @@ class MyApp < Ovto::App
         o 'span.CompleteTaskButton' do
           o 'a', {
             href: "#",
-            onclick: ->{ actions.request_update_task(task: task, done: true); false }
+            onclick: ->{ actions.request_update_task(task: task, updates: {done: true}); false }
           }, "○"
         end
       end
