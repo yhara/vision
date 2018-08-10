@@ -267,5 +267,3 @@ class MyApp < Ovto::App
     actions.get_tasks
   end
 end
-
-MyApp.run(id: 'ovto-view') if `location.pathname == "/"`
