@@ -91,5 +91,13 @@ class MyApp < Ovto::App
         tasks: Task.merge(state.tasks, updated_task)
       }
     end
+
+    def show_task_details(state:, task:)
+      return {focused_task: task}
+    end
+
+    def hide_task_details(state:)
+      return {focused_task: nil}
+    end
   end
 end

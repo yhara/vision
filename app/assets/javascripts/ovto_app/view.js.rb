@@ -6,6 +6,9 @@ class MyApp < Ovto::App
       o '.Main' do
         o 'h1', 'Vision'
         o TaskListByDueDate, tasks: state.tasks
+        if state.focused_task
+          o TaskDetails, task: state.focused_task
+        end
       end
     end
 
@@ -72,6 +75,7 @@ class MyApp < Ovto::App
     class TaskListItem < Ovto::Component
       def render(task:)
         o '.TaskListItem', {
+          onclick: ->{ actions.show_task_details(task: task) },
           draggable: true,
           ondragstart: ->{ actions.drag_start(task: task) },
         } do
@@ -105,6 +109,18 @@ class MyApp < Ovto::App
             due_date = `document.querySelector('#'+id_due_date).value`
             actions.request_create_task(title: title, due_date: due_date)
           }
+        end
+      end
+    end
+
+    class TaskDetails < Ovto::Component
+      def render(task:)
+        o '.TaskDetails' do
+          o 'button', onclick: ->{ actions.hide_task_details() } do
+            '×'
+          end
+          o '.title', task.title
+          o '.due_date', task.due_date
         end
       end
     end

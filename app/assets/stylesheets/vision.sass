@@ -5,16 +5,21 @@ $background-color: white
 @media (max-width: 399px)
   .Main
     width: 100%
-  h1
-    font-size: 2.4rem
-  h2
-    font-size: 2.0rem
+  .TaskDetails
+    width: 90%
+    margin: 5%
 
-// Small devices
-@media (min-width: 400px) and (max-width: 1023px)
+// Normal devices
+@media (min-width: 400px)
   .Main
     width: 400px
     margin: auto
+  .TaskDetails
+    width: 400px * 0.9
+    margin-left: 400px * 0.05
+
+// Small devices
+@media (max-width: 1023px)
   h1
     font-size: 2.4rem
   h2
@@ -22,9 +27,6 @@ $background-color: white
 
 // Large devices
 @media (min-width: 1024px)
-  .Main
-    width: 400px
-    margin: auto
   h1
     font-size: 3.2rem
   h2
@@ -47,6 +49,9 @@ div
 
 h1
   text-align: center
+
+.Main
+  position: relative
 
 .TasksOfADay
   border: 2px solid $background-color
@@ -97,3 +102,11 @@ h1
     margin: 5px
     padding: 0
     height: 100%
+
+.TaskDetails
+  position: fixed
+  top: 0
+  left: auto
+  height: 400px
+  background: white
+  border: 1px solid black

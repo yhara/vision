@@ -40,6 +40,7 @@ class MyApp < Ovto::App
 
   class State < Ovto::State
     item :tasks, default: []
+    item :focused_task, default: nil
     item :drag_info, default: DragInfo.new
   end
 end
