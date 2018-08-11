@@ -115,12 +115,32 @@ class MyApp < Ovto::App
 
     class TaskDetails < Ovto::Component
       def render(task:)
+        id_title = "TaskDetails-title"
+        id_due_date = "TaskDetails-due-date" 
         o '.TaskDetails' do
-          o 'button', onclick: ->{ actions.hide_task_details() } do
-            '×'
+          o 'div' do
+            o 'label', {for: id_title}, 'Title:'
+            o 'input', id: id_title, type: 'text', value: task.title
           end
-          o '.title', task.title
-          o '.due_date', task.due_date
+          o 'div' do
+            o 'label', {for: id_due_date}, 'Due date:'
+            o 'input', id: id_due_date, type: 'date', value: task.due_date
+          end
+          o 'div' do
+            o 'input.save-button', type: 'button', value: 'Save', onclick: ->{
+              actions.request_update_task(task: task, updates: {
+                title: `document.querySelector('#'+id_title).value`,
+                due_date: `document.querySelector('#'+id_due_date).value`,
+              })
+              actions.hide_task_details()
+            }
+            o 'a', {
+              href: '#', onclick: ->(e){
+                e.preventDefault()
+                actions.hide_task_details()
+              }
+            }, 'Close'
+          end
         end
       end
     end

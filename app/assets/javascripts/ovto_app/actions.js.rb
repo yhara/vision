@@ -39,6 +39,10 @@ class MyApp < Ovto::App
         task: {}
       }
       updated_task = task.merge({})
+      if updates.key?(:title)
+        params[:task][:title] = updates[:title]
+        updated_task = updated_task.merge(title: updates[:title])
+      end
       if updates.key?(:done)
         params[:task][:done] = (updates[:done] ? '1' : '0')
         updated_task = updated_task.merge(done: updates[:done])
