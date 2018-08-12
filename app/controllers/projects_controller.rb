@@ -5,7 +5,10 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   def index
     @active_projects = Project.active
-    @archived_projects = Project.archived
+    respond_to do |format|
+      format.html { @archived_projects = Project.archived }
+      format.json {}
+    end
   end
 
   # GET /projects/1
