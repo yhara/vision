@@ -6,6 +6,7 @@ class MyApp < Ovto::App
     item :title
     item :done
     item :due_date
+    item :project
     item :created_at
     item :updated_at
     item :url
@@ -15,6 +16,12 @@ class MyApp < Ovto::App
       if @values[:due_date]
         @date_due_date ||= Date.parse(@values[:due_date])
       end
+    end
+
+    def self.from_json(json)
+      params = json.dup
+      params[:project] = Project.from_json(params[:project]) if params[:project]
+      Task.new(**params)
     end
 
     # Update the `task` in `tasks`
@@ -29,6 +36,20 @@ class MyApp < Ovto::App
 
     def self.unsorted_or_outdated(tasks)
       tasks.select{|t| t.due_date.nil? || t.due_date < Date.today}
+    end
+  end
+
+  class Project < Ovto::State
+    item :id
+    item :title
+    item :position
+    item :archived
+    item :archived_at
+    item :created_at
+    item :updated_at
+
+    def self.from_json(json)
+      Project.new(**json)
     end
   end
 

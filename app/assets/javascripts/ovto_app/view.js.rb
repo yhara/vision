@@ -116,6 +116,7 @@ class MyApp < Ovto::App
       def render(task:)
         id_title = "TaskDetails-title"
         id_due_date = "TaskDetails-due-date" 
+        id_project = "TaskDetails-project"
         o '.TaskDetails' do
           o 'div' do
             o 'label', {for: id_title}, 'Title:'
@@ -124,6 +125,10 @@ class MyApp < Ovto::App
           o 'div' do
             o 'label', {for: id_due_date}, 'Due date:'
             o 'input', id: id_due_date, type: 'date', value: task.due_date
+          end
+          o 'div' do
+            o 'label', {for: id_project}, 'Project:'
+            o 'div', task.project.inspect
           end
           o 'div' do
             o 'input.save-button', type: 'button', value: 'Save', onclick: ->{
