@@ -1,0 +1,53 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Active Projects</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Title</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @active_projects.each do |project| %>
+      <tr>
+        <td><%= project.position %></td>
+        <td><%= project.title %></td>
+        <td><%= link_to 'Show', project %></td>
+        <td><%= link_to 'Edit', edit_project_path(project) %></td>
+        <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Project', new_project_path %>
+
+<h1>Archived Projects</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Archived at</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @archived_projects.each do |project| %>
+      <tr>
+        <td><%= project.title %></td>
+        <td><%= project.archived_at %></td>
+        <td><%= link_to 'Show', project %></td>
+        <td><%= link_to 'Edit', edit_project_path(project) %></td>
+        <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
