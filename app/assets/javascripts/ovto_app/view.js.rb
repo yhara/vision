@@ -4,7 +4,6 @@ class MyApp < Ovto::App
   class View < Ovto::Component
     def render(state:)
       o '.Main' do
-        o 'h1', 'Vision'
         o TaskListByDueDate, tasks: state.tasks
         if state.focused_task
           o TaskDetails, task: state.focused_task
