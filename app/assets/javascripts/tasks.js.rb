@@ -22,5 +22,6 @@ class MyApp < Ovto::App
 
   def startup
     actions.get_tasks
+    actions.get_projects
   end
 end

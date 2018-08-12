@@ -1,10 +1,12 @@
 require 'ovto'
 require 'ovto_app/actions/dnd_actions'
+require 'ovto_app/actions/project_actions'
 require 'ovto_app/actions/task_actions'
 
 class MyApp < Ovto::App
   class Actions < Ovto::Actions
     include DndActions
+    include ProjectActions
     include TaskActions
 
     def show_task_details(state:, task:)

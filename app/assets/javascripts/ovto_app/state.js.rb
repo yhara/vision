@@ -45,9 +45,14 @@ class MyApp < Ovto::App
     item :archived_at
     item :created_at
     item :updated_at
+    item :url
 
     def self.from_json(json)
       Project.new(**json)
+    end
+
+    def self.find(projects, id)
+      projects.find{|x| x.id == id}
     end
   end
 
@@ -59,6 +64,7 @@ class MyApp < Ovto::App
 
   class State < Ovto::State
     item :tasks, default: []
+    item :projects, default: []
     item :focused_task, default: nil
     item :drag_info, default: DragInfo.new
   end
