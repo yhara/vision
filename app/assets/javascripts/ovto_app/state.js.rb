@@ -6,7 +6,7 @@ class MyApp < Ovto::App
     item :title
     item :done
     item :due_date
-    item :project
+    item :project_id
     item :created_at
     item :updated_at
     item :url
@@ -19,9 +19,7 @@ class MyApp < Ovto::App
     end
 
     def self.from_json(json)
-      params = json.dup
-      params[:project] = Project.from_json(params[:project]) if params[:project]
-      Task.new(**params)
+      Task.new(**json)
     end
 
     # Update the `task` in `tasks`
