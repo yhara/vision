@@ -81,11 +81,19 @@ class MyApp < Ovto::App
       def render(state:, task:)
         project = Project.find(state.projects, task.project_id)
         o '.TaskListItem', {
-          onclick: ->{ actions.show_task_details(task: task) },
           draggable: true,
           ondragstart: ->{ actions.drag_start(task: task) },
         } do
           o CompleteTaskButton, task: task
+          o TaskListItemDetails, task: task
+        end
+      end
+    end
+
+    class TaskListItemDetails < Ovto::Component
+      def render(state:, task:)
+        project = Project.find(state.projects, task.project_id)
+        o '.TaskListItemDetails', onclick: ->{ actions.show_task_details(task: task) } do
           o 'span.title', task.title
           o 'span.project-title', (project && project.title)
           o 'span.due-date', task.due_date.to_s
