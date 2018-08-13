@@ -1,8 +1,10 @@
 $light-grey: hsl(0, 0, 86%)
 $background-color: white
 
-@mixin dnd-hovered
-  border: 2px solid red
+@mixin dnd-hoverable
+  border: 2px solid $background-color
+  &.hover
+    border: 2px solid red
 
 // Narrow devices
 @media (max-width: 399px)
@@ -62,9 +64,7 @@ h1
   justify-content: center
 
 .TasksOfADay
-  border: 2px solid $background-color
-  &.hover
-    @include dnd-hovered
+  @include dnd-hoverable
 
 .TaskList
   margin: auto
@@ -129,5 +129,4 @@ h1
     line-height: 150%
 
 .ProjectListItem
-  &.hover
-    @include dnd-hovered
+  @include dnd-hoverable
