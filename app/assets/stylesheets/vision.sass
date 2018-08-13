@@ -1,6 +1,9 @@
 $light-grey: hsl(0, 0, 86%)
 $background-color: white
 
+@mixin dnd-hovered
+  border: 2px solid red
+
 // Narrow devices
 @media (max-width: 399px)
   .TaskListByDueDate
@@ -61,8 +64,7 @@ h1
 .TasksOfADay
   border: 2px solid $background-color
   &.hover
-    backgroud: red
-    border: 2px solid red
+    @include dnd-hovered
 
 .TaskList
   margin: auto
@@ -125,3 +127,7 @@ h1
   li
     font-size: 1.8rem
     line-height: 150%
+
+.ProjectListItem
+  &.hover
+    @include dnd-hovered
