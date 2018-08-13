@@ -46,11 +46,13 @@ class MyApp < Ovto::App
 
     class TasksOfADay < Ovto::Component
       def render(state:, label:, due_date:, tasks:)
-        is_hovered = state.drag_info.target_date == due_date
+        is_hovered = state.drag_info.drop_target.type == "due_date" &&
+                     state.drag_info.drop_target.key == due_date
+        drop_target = DropTarget.new(type: "due_date", key: due_date)
         o '.TasksOfADay', {
-          ondragenter: ->{ actions.drag_enter(target_date: due_date) },
-          ondragover: ->(e){ actions.drag_over(target_date: due_date); e.preventDefault() },
-          ondragleave: ->{ actions.drag_leave(target_date: due_date) },
+          ondragenter: ->{ actions.drag_enter(drop_target: drop_target) },
+          ondragover: ->(e){ actions.drag_over(); e.preventDefault() },
+          ondragleave: ->{ actions.drag_leave() },
           ondrop: ->(e){ actions.drag_drop() },
           class: (is_hovered && 'hover')
         } do

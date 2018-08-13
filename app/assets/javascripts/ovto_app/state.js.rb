@@ -56,9 +56,14 @@ class MyApp < Ovto::App
     end
   end
 
+  class DropTarget < Ovto::State
+    item :type, default: nil  # "due_date" || "project"
+    item :key, default: nil   # the due date or project_id
+  end
+
   class DragInfo < Ovto::State
     item :task_id, default: nil
-    item :target_date, default: nil
+    item :drop_target, default: DropTarget.new
     item :dragover_occurred, default: false
   end
 
