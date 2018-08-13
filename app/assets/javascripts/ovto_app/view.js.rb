@@ -128,6 +128,7 @@ class MyApp < Ovto::App
             new_title = `document.querySelector('#'+id_title).value`
             new_due_date = `document.querySelector('#'+id_due_date).value`
             actions.request_create_task(title: new_title, due_date: new_due_date)
+            `document.querySelector('#'+id_title).value = ""`
           }
         end
       end
