@@ -13,7 +13,7 @@ class MyApp < Ovto::App
 
     # Convert the string returned by the server into Date class
     def due_date
-      if @values[:due_date]
+      if @values[:due_date] != nil && @values[:due_date] != ""
         @date_due_date ||= Date.parse(@values[:due_date])
       end
     end
