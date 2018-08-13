@@ -3,17 +3,18 @@ $background-color: white
 
 // Narrow devices
 @media (max-width: 399px)
-  .Main
+  .TaskListByDueDate
     width: 100%
   .TaskDetails
     width: 90%
     margin: 5%
+  .Sidebar
+    display: none
 
 // Normal devices
 @media (min-width: 400px)
-  .Main
+  .TaskListByDueDate
     width: 400px
-    margin: auto
   .TaskDetails
     width: 400px * 0.9
     margin-left: 400px * 0.05
@@ -46,12 +47,16 @@ code
 div
   margin: 0
   padding: 0
+  //border: 1px dashed orange  // Debug
 
 h1
   text-align: center
 
 .Main
   position: relative
+  display: flex
+  flex-direction: row-reverse
+  justify-content: center
 
 .TasksOfADay
   border: 2px solid $background-color
@@ -112,3 +117,11 @@ h1
   height: 400px
   background: white
   border: 1px solid black
+
+.Sidebar
+  ul
+    padding-left: 20px
+    padding-right: 60px
+  li
+    font-size: 1.8rem
+    line-height: 150%

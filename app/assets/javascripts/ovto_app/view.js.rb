@@ -1,10 +1,14 @@
 require 'ovto'
+require 'ovto_app/components/sidebar'
 
 class MyApp < Ovto::App
   class View < Ovto::Component
     def render(state:)
-      o '.Main' do
-        o TaskListByDueDate, tasks: state.tasks
+      o '.View' do
+        o '.Main' do
+          o TaskListByDueDate, tasks: state.tasks
+          o Sidebar
+        end
         if state.focused_task
           o TaskDetails, task: state.focused_task
         end
