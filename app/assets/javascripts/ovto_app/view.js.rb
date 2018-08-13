@@ -125,6 +125,7 @@ class MyApp < Ovto::App
         id_title = "TaskDetails-title"
         id_due_date = "TaskDetails-due-date" 
         id_project = "TaskDetails-project"
+        o '.TaskDetailsContainer' do
         o '.TaskDetails' do
           o 'div' do
             o 'label', {for: id_title}, 'Title:'
@@ -162,6 +163,7 @@ class MyApp < Ovto::App
               }
             }, 'Close'
           end
+        end
         end
       end
     end
