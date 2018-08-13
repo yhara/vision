@@ -52,6 +52,10 @@ class MyApp < Ovto::App
           params[:task][:due_date] = updates[:due_date].to_s
           updated_task = updated_task.merge(due_date: updates[:due_date])
         end
+        if updates.key?(:project_id)
+          params[:task][:project_id] = updates[:project_id]
+          updated_task = updated_task.merge(project_id: updates[:project_id])
+        end
         Ovto.fetch("/tasks/#{task.id}.json", 'PUT', params).then {|json|
           # OK.
         }.fail {|e|

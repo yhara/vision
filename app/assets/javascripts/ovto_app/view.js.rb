@@ -130,13 +130,22 @@ class MyApp < Ovto::App
           end
           o 'div' do
             o 'label', {for: id_project}, 'Project:'
-            o 'div', Project.find(state.projects, task.project_id).inspect
+            o 'select', id: id_project do
+              o 'option', {value: ""}, "---"
+              state.projects.each do |project|
+                o 'option', {
+                  value: project.id,
+                  selected: task.project_id == project.id
+                }, project.title 
+              end
+            end
           end
           o 'div' do
             o 'input.save-button', type: 'button', value: 'Save', onclick: ->{
               actions.request_update_task(task: task, updates: {
                 title: `document.querySelector('#'+id_title).value`,
                 due_date: `document.querySelector('#'+id_due_date).value`,
+                project_id: `document.querySelector('#'+id_project).value`.to_i,
               })
               actions.hide_task_details()
             }
