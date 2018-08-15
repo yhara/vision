@@ -12,6 +12,10 @@
 
   <body>
     <h1><a href='/'>Vision</a></h1>
+    <div>
+      <p id="notice"><%= flash[:notice] %></p>
+      <p id="alert"><%= flash[:alert] %></p>
+    </div>
     <%= yield %>
   </body>
 </html>
