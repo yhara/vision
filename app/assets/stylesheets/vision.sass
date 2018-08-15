@@ -6,9 +6,13 @@ $background-color: white
   &.hover
     border: 2px solid red
 
+@mixin clickable
+  &:hover
+    background: $light-grey
+
 // Narrow devices
 @media (max-width: 399px)
-  .TaskListByDueDate
+  .CurrentTaskList
     width: 100%
   .TaskDetails
     width: 90%
@@ -18,7 +22,7 @@ $background-color: white
 
 // Normal devices
 @media (min-width: 400px)
-  .TaskListByDueDate
+  .CurrentTaskList
     width: 400px
   .TaskDetails
     width: 400px * 0.9
@@ -63,6 +67,9 @@ h1
   flex-direction: row-reverse
   justify-content: center
 
+.ClearProjectButton
+  @include clickable
+
 .TasksOfADay
   @include dnd-hoverable
 
@@ -74,12 +81,11 @@ h1
     list-style: none
 
 .TaskListItem
+  @include clickable
   padding: 0.2rem
   font-size: 2.4rem
   border: 1px solid $light-grey
   display: flex
-  &:hover
-    background: $light-grey
 
   .CompleteTaskButton
     margin-right: 0.4rem
@@ -139,3 +145,4 @@ h1
 
 .ProjectListItem
   @include dnd-hoverable
+  @include clickable

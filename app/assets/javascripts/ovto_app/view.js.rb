@@ -6,11 +6,49 @@ class MyApp < Ovto::App
     def render(state:)
       o '.View' do
         o '.Main' do
-          o TaskListByDueDate, tasks: state.tasks
+          o CurrentTaskList
           o Sidebar
         end
         if state.focused_task
           o TaskDetails, task: state.focused_task
+        end
+      end
+    end
+
+    class CurrentTaskList < Ovto::Component
+      def render(state:)
+        o '.CurrentTaskList' do
+          if state.selected_project_id 
+            o TaskListOfProject
+          else
+            o TaskListByDueDate, tasks: state.tasks
+          end
+        end
+      end
+    end
+
+    class TaskListOfProject < Ovto::Component
+      def render(state:)
+        project = Project.find(state.projects, state.selected_project_id)
+        tasks = Task.find_by_project(state.tasks, project.id)
+        o '.TaskListOfProject' do
+          o 'h2' do
+            o ClearProjectButton
+            o 'text', project.title
+          end
+          if tasks.any?
+            o TaskList, tasks: tasks
+          else
+            o 'p', '(empty)'
+          end
+        end
+      end
+    end
+
+    class ClearProjectButton < Ovto::Component
+      def render
+        o 'span.ClearProjectButton', onclick: ->{ actions.select_project(project_id: nil) } do
+          '←'
         end
       end
     end

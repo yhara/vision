@@ -35,6 +35,10 @@ class MyApp < Ovto::App
     def self.unsorted_or_outdated(tasks)
       tasks.select{|t| t.due_date.nil? || t.due_date < Date.today}
     end
+
+    def self.find_by_project(tasks, project_id)
+      tasks.select{|t| t.project_id == project_id}
+    end
   end
 
   class Project < Ovto::State
@@ -70,6 +74,7 @@ class MyApp < Ovto::App
   class State < Ovto::State
     item :tasks, default: []
     item :projects, default: []
+    item :selected_project_id, default: nil
     item :focused_task, default: nil
     item :drag_info, default: DragInfo.new
   end
