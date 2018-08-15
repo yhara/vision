@@ -62,6 +62,7 @@ end
 # ---
 
 gem 'acts_as_list'
+gem 'sorcery'
 
 gem 'opal-rails'
 gem 'ovto', path: '../ovto/'
