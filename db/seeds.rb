@@ -5,3 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+if User.count == 0
+  cred = Rails.application.credentials[:vision]
+  User.create!(email: cred[:email], password: cred[:password])
+end

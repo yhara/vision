@@ -1,24 +1,22 @@
-# README
+# Vision
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A Todo-app written in Rails and [Ovto](https://github.com/yhara/ovto).
 
-Things you may want to cover:
+## How to try
 
-* Ruby version
+- git clone
+- `bundle install`
+- `rails db:migrate`
+- `EDITOR=vim bin/rails credentials:edit` and add this:
 
-* System dependencies
+```
+vision:
+  email: "foo@example.jp"
+  password: "passw0rd"
+```
 
-* Configuration
+- Then `rails db:seed`
 
-* Database creation
+## License
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+MIT
