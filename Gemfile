@@ -64,5 +64,13 @@ end
 gem 'acts_as_list'
 gem 'sorcery'
 
+group :development do
+  gem 'capistrano'
+  gem 'capistrano-rails'
+  gem 'capistrano-passenger'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rbenv'
+end
+
 gem 'opal-rails'
-gem 'ovto', path: '../ovto/'
+gem 'ovto', github: 'yhara/ovto'

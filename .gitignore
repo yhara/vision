@@ -31,3 +31,7 @@
 
 # ---
 /config/credentials.yml.enc
+
+/config/deploy/
+/config/deploy.rb
+/Capfile
