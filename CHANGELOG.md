@@ -1,4 +1,4 @@
-# (not yet)
+# v0.2.0 (2018-08-22)
 
 - Require login
 
