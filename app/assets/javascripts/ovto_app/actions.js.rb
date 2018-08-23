@@ -9,8 +9,16 @@ class MyApp < Ovto::App
     include ProjectActions
     include TaskActions
 
-    def select_main_view(state:, view:)
-      return {main_view: view}
+    def show_upcoming_tasks(state:)
+      return {main_view: MainViewInfo.new(type: :upcoming_tasks)}
+    end
+
+    def show_projects(state:)
+      return {main_view: MainViewInfo.new(type: :projects)}
+    end
+
+    def show_project(state:, project_id:)
+      return {main_view: MainViewInfo.new(type: :project, project_id: project_id)}
     end
 
     def show_task_details(state:, task:)

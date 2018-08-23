@@ -14,10 +14,6 @@ class MyApp < Ovto::App
       def receive_projects(state:, projects:)
         return {projects: projects}
       end
-
-      def select_project(state:, project_id:)
-        return {selected_project_id: project_id}
-      end
     end
   end
 end

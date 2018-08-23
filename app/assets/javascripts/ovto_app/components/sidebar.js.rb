@@ -28,7 +28,7 @@ class MyApp < Ovto::App
         drop_target = DropTarget.new(type: "project", key: project.id)
         n_tasks = Task.find_by_project(state.tasks, project.id).length
         o 'li.ProjectListItem', {
-          onclick: ->{ actions.select_project(project_id: project.id) },
+          onclick: ->{ actions.show_project(project_id: project.id) },
           ondragenter: ->{ actions.drag_enter(drop_target: drop_target) },
           ondragover: ->(e){ actions.drag_over(); e.preventDefault() },
           ondragleave: ->{ actions.drag_leave() },

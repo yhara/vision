@@ -21,12 +21,13 @@ class MyApp < Ovto::App
       def render(state:)
         o '.MainContent' do
           o ShowProjectsLink
-          case state.main_view 
-          when :normal
+          case state.main_view.type
+          when :upcoming_tasks, :project
             o CurrentTaskList
           when :projects
             o MobileProjectList, projects: state.projects
-          else raise
+          else
+            raise "state.main_view is invalid: #{state.main_view}"
           end
         end
       end
@@ -34,7 +35,7 @@ class MyApp < Ovto::App
 
     class ShowProjectsLink < Ovto::Component
       def render
-        o '.ShowProjectsLink', onclick: ->{ actions.select_main_view(view: :projects) } do
+        o '.ShowProjectsLink', onclick: ->{ actions.show_projects() } do
           o 'div', "Projects"
         end
       end
@@ -54,10 +55,7 @@ class MyApp < Ovto::App
       def render(state:, project:)
         n_tasks = Task.find_by_project(state.tasks, project.id).length
         o 'li.MobileProjectListItem', {
-          onclick: ->{
-            actions.select_project(project_id: project.id)
-            actions.change_view(view: :normal)
-          },
+          onclick: ->{ actions.show_project(project_id: project.id) },
         } do
           o 'span.project_title', project.title
           o 'span.n_tasks', "(#{n_tasks})"

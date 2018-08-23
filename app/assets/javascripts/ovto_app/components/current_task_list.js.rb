@@ -5,8 +5,8 @@ class MyApp < Ovto::App
     class CurrentTaskList < Ovto::Component
       def render(state:)
         o '.CurrentTaskList' do
-          if state.selected_project_id 
-            o TaskListOfProject
+          if state.main_view.type == :project 
+            o TaskListOfProject, project_id: state.main_view.project_id
           else
             o TaskListByDueDate, tasks: state.tasks
           end
@@ -15,8 +15,8 @@ class MyApp < Ovto::App
     end
 
     class TaskListOfProject < Ovto::Component
-      def render(state:)
-        project = Project.find(state.projects, state.selected_project_id)
+      def render(state:, project_id:)
+        project = Project.find(state.projects, project_id)
         tasks = Task.find_by_project(state.tasks, project.id)
         o '.TaskListOfProject' do
           o 'h2' do
@@ -35,7 +35,7 @@ class MyApp < Ovto::App
 
     class ClearProjectButton < Ovto::Component
       def render
-        o 'span.ClearProjectButton', onclick: ->{ actions.select_project(project_id: nil) } do
+        o 'span.ClearProjectButton', onclick: ->{ actions.show_upcoming_tasks() } do
           '←'
         end
       end
