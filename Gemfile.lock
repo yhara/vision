@@ -1,6 +1,5 @@
-GIT
-  remote: https://github.com/yhara/ovto.git
-  revision: 8d6beb50507ec19533998bce231ef7a9b1b2796c
+PATH
+  remote: ../ovto
   specs:
     ovto (0.1.0)
       opal (>= 0.10)
