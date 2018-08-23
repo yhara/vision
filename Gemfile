@@ -73,5 +73,4 @@ group :development do
 end
 
 gem 'opal-rails'
-#gem 'ovto', github: 'yhara/ovto'
-gem 'ovto', path: '../ovto'
+gem 'ovto', github: 'yhara/ovto'
