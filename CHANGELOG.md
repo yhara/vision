@@ -1,4 +1,4 @@
-# v0.2.1 (2018-08-23)
+# v0.2.2 (2018-08-23)
 
 - feat: Support DnD on mobile (Thanks to [mobile-drag-drop](https://github.com/timruffles/mobile-drag-drop))
 - feat: Show # of tasks in projects
