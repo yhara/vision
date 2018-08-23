@@ -21,4 +21,5 @@ vision:
 
 MIT
 
-mobile-drag-drop: https://github.com/timruffles/mobile-drag-drop/blob/master/LICENSE
+- mobile-drag-drop: https://github.com/timruffles/mobile-drag-drop/blob/master/LICENSE
+- normalize.css: https://github.com/necolas/normalize.css/blob/master/LICENSE.md

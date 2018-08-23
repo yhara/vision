@@ -1,0 +1,57 @@
+// Narrow devices
+@media (max-width: 399px)
+  .CurrentTaskList
+    width: 100%
+  .TaskDetails
+    width: 90%
+    margin: 5%
+  .Sidebar
+    display: none
+
+// Normal devices
+@media (min-width: 400px)
+  .CurrentTaskList
+    width: 400px
+  .TaskDetails
+    width: 400px * 0.9
+    margin-left: 400px * 0.05
+
+// Small devices
+@media (max-width: 1023px)
+  h1
+    font-size: 2.4rem
+  h2
+    font-size: 2.0rem
+
+// Large devices
+@media (min-width: 1024px)
+  h1
+    font-size: 3.2rem
+  h2
+    font-size: 2.4rem
+
+*
+  box-sizing: border-box
+html
+  font-size: 62.5%
+body
+  // Copied form Bulma
+  font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif
+  font-size: 16px  // We cannot use `rem` here due to chrome rem bug
+code
+  font-family: Monaco, monospace
+  font-size: 1.4rem
+div
+  margin: 0
+  padding: 0
+  //border: 1px dashed orange  // Debug
+
+h1
+  text-align: center
+
+.Main
+  position: relative
+  display: flex
+  flex-direction: row-reverse
+  justify-content: center
+

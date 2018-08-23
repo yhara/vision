@@ -1,0 +1,12 @@
+$light-grey: hsl(0, 0, 86%)
+$background-color: white
+
+@mixin dnd-hoverable
+  border: 2px solid $background-color
+  &.hover
+    border: 2px solid red
+
+@mixin clickable
+  &:hover
+    background: $light-grey
+

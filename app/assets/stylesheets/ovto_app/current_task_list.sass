@@ -1,0 +1,62 @@
+@import "_mixins.sass"
+
+.CurrentTaskList
+
+.TaskListOfProject
+
+.ClearProjectButton
+  @include clickable
+
+.TaskListByDueDate
+
+.TasksOfADay
+  @include dnd-hoverable
+
+.TaskList
+  margin: auto
+  ul
+    margin: 0
+    padding: 0
+    list-style: none
+
+.TaskListItem
+  @include clickable
+  padding: 0.2rem
+  font-size: 2.4rem
+  border: 1px solid $light-grey
+  display: flex
+
+.CompleteTaskButton
+  margin-right: 0.4rem
+  a
+    text-decoration: none
+    color: black
+    &:hover
+      color: red
+
+.TaskListItemDetails
+  flex-grow: 1
+  display: inline-flex
+
+  .title
+    flex-grow: 1
+  .project-title
+    font-size: 1.4rem
+  .due-date
+    font-size: 1.4rem
+
+.TaskForm
+  width: 400px
+  margin: auto
+  display: flex
+  input
+    border: 1px solid $light-grey
+
+  .new-task-title
+    flex-grow: 1
+
+  .add-task-button
+    width: 50px
+    margin: 5px
+    padding: 0
+    height: 100%

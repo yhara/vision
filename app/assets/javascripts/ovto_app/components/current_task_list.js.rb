@@ -116,17 +116,6 @@ class MyApp < Ovto::App
       end
     end
 
-    class TaskListItemDetails < Ovto::Component
-      def render(state:, task:)
-        project = Project.find(state.projects, task.project_id)
-        o '.TaskListItemDetails', onclick: ->{ actions.show_task_details(task: task) } do
-          o 'span.title', task.title
-          o 'span.project-title', (project && project.title)
-          o 'span.due-date', task.due_date.to_s
-        end
-      end
-    end
-
     class CompleteTaskButton < Ovto::Component
       def render(task:)
         o 'span.CompleteTaskButton' do
@@ -134,6 +123,17 @@ class MyApp < Ovto::App
             href: "#",
             onclick: ->{ actions.request_update_task(task: task, updates: {done: true}); false }
           }, "○"
+        end
+      end
+    end
+
+    class TaskListItemDetails < Ovto::Component
+      def render(state:, task:)
+        project = Project.find(state.projects, task.project_id)
+        o '.TaskListItemDetails', onclick: ->{ actions.show_task_details(task: task) } do
+          o 'span.title', task.title
+          o 'span.project-title', (project && project.title)
+          o 'span.due-date', task.due_date.to_s
         end
       end
     end
