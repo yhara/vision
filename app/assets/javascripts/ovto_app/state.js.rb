@@ -33,7 +33,8 @@ class MyApp < Ovto::App
     end
 
     def self.unsorted_or_outdated(tasks)
-      tasks.select{|t| t.due_date.nil? || t.due_date < Date.today}
+      tasks.select{|t| t.project_id == nil}
+           .select{|t| t.due_date.nil? || t.due_date < Date.today}
     end
 
     def self.find_by_project(tasks, project_id)
