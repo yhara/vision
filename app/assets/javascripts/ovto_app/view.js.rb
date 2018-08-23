@@ -8,7 +8,7 @@ class MyApp < Ovto::App
     def render(state:)
       o '.View' do
         o '.Main' do
-          o MainContent
+          o MainContent, main_view: state.main_view
           o Sidebar
         end
         if state.focused_task
@@ -18,16 +18,18 @@ class MyApp < Ovto::App
     end
 
     class MainContent < Ovto::Component
-      def render(state:)
+      def render(state:, main_view:)
         o '.MainContent' do
           o ShowProjectsLink
-          case state.main_view.type
-          when :upcoming_tasks, :project
-            o CurrentTaskList
+          case main_view.type
+          when :upcoming_tasks
+            o TaskListByDueDate, tasks: state.tasks
           when :projects
             o MobileProjectList, projects: state.projects
+          when :project
+            o TaskListOfProject, project_id: main_view.project_id
           else
-            raise "state.main_view is invalid: #{state.main_view}"
+            raise "state.main_view is invalid: #{main_view}"
           end
         end
       end

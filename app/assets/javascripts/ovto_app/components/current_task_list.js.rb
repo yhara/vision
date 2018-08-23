@@ -2,18 +2,6 @@ require 'ovto'
 
 class MyApp < Ovto::App
   class View < Ovto::Component
-    class CurrentTaskList < Ovto::Component
-      def render(state:)
-        o '.CurrentTaskList' do
-          if state.main_view.type == :project 
-            o TaskListOfProject, project_id: state.main_view.project_id
-          else
-            o TaskListByDueDate, tasks: state.tasks
-          end
-        end
-      end
-    end
-
     class TaskListOfProject < Ovto::Component
       def render(state:, project_id:)
         project = Project.find(state.projects, project_id)
