@@ -20,3 +20,5 @@ vision:
 ## License
 
 MIT
+
+mobile-drag-drop: https://github.com/timruffles/mobile-drag-drop/blob/master/LICENSE
