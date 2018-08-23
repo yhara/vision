@@ -26,6 +26,7 @@ class MyApp < Ovto::App
         is_hovered = state.drag_info.drop_target.type == "project" &&
                      state.drag_info.drop_target.key == project.id
         drop_target = DropTarget.new(type: "project", key: project.id)
+        n_tasks = Task.find_by_project(state.tasks, project.id).length
         o 'li.ProjectListItem', {
           onclick: ->{ actions.select_project(project_id: project.id) },
           ondragenter: ->{ actions.drag_enter(drop_target: drop_target) },
@@ -33,7 +34,10 @@ class MyApp < Ovto::App
           ondragleave: ->{ actions.drag_leave() },
           ondrop: ->(e){ actions.drag_drop() },
           class: (is_hovered && 'hover')
-        }, project.title
+        } do
+          o 'span.project_title', project.title
+          o 'span.n_tasks', "(#{n_tasks})"
+        end
       end
     end
   end
