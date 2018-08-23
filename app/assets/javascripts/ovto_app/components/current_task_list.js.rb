@@ -75,9 +75,9 @@ class MyApp < Ovto::App
                      state.drag_info.drop_target.key == due_date
         drop_target = DropTarget.new(type: "due_date", key: due_date)
         o '.TasksOfADay', {
-          ondragenter: ->{ actions.drag_enter(drop_target: drop_target) },
-          ondragover: ->(e){ actions.drag_over(); e.preventDefault() },
-          ondragleave: ->{ actions.drag_leave() },
+          ondragenter: ->(e){ actions.drag_enter(drop_target: drop_target); e.preventDefault(); e.stopPropagation() },
+          ondragover: ->(e){ actions.drag_over(); e.preventDefault(); e.stopPropagation() },
+          ondragleave: ->(e){ actions.drag_leave(); e.stopPropagation() },
           ondrop: ->(e){ actions.drag_drop() },
           class: (is_hovered && 'hover')
         } do
