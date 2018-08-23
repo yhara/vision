@@ -1,3 +1,7 @@
+# (not yet)
+
+- feat(mobile): Disable user scaling
+
 # v0.2.2 (2018-08-23)
 
 - feat: Support DnD on mobile (Thanks to [mobile-drag-drop](https://github.com/timruffles/mobile-drag-drop))
