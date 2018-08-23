@@ -72,11 +72,16 @@ class MyApp < Ovto::App
     item :dragover_occurred, default: false
   end
 
+  class MainViewInfo < Ovto::State
+    item :type  # :upcoming_tasks, :projects, :project
+    item :project_id, default: nil
+  end
+
   class State < Ovto::State
     item :tasks, default: []
     item :projects, default: []
-    item :selected_project_id, default: nil
     item :focused_task, default: nil
     item :drag_info, default: DragInfo.new
+    item :main_view, default: MainViewInfo.new(type: :upcoming_tasks)
   end
 end

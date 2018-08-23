@@ -1,5 +1,6 @@
 # (not yet)
 
+- feat(mobile): Show project list
 - feat(mobile): Disable user scaling
 - feat: Add button to hide flashes
 
