@@ -20,33 +20,6 @@ class MyApp < Ovto::App
       end
     end
 
-    class TaskListOfProject < Ovto::Component
-      def render(state:, project_id:)
-        project = Project.find(state.projects, project_id)
-        tasks = Task.find_by_project(state.tasks, project.id)
-        o '.TaskListOfProject' do
-          o 'h2' do
-            o ClearProjectButton
-            o 'text', project.title
-          end
-          if tasks.any?
-            o TaskList, tasks: tasks
-          else
-            o 'p', '(empty)'
-          end
-          o TaskForm, due_date: DATE_UNSORTED, project_id: project.id
-        end
-      end
-    end
-
-    class ClearProjectButton < Ovto::Component
-      def render
-        o 'span.ClearProjectButton', onclick: ->{ actions.show_upcoming_tasks() } do
-          '←'
-        end
-      end
-    end
-
     class TaskListByDueDate < Ovto::Component
       def render(tasks:)
         task_groups = [
@@ -167,5 +140,55 @@ class MyApp < Ovto::App
         end
       end
     end
+
+    class MobileProjectList < Ovto::Component
+      def render(projects:)
+        o 'ul.MobileProjectList' do
+          projects.each do |project|
+            o MobileProjectListItem, project: project
+          end
+        end
+      end
+    end
+
+    class MobileProjectListItem < Ovto::Component
+      def render(state:, project:)
+        n_tasks = Task.find_by_project(state.tasks, project.id).length
+        o 'li.MobileProjectListItem', {
+          onclick: ->{ actions.show_project(project_id: project.id) },
+        } do
+          o 'span.project_title', project.title
+          o 'span.n_tasks', "(#{n_tasks})"
+        end
+      end
+    end
+
+    class TaskListOfProject < Ovto::Component
+      def render(state:, project_id:)
+        project = Project.find(state.projects, project_id)
+        tasks = Task.find_by_project(state.tasks, project.id)
+        o '.TaskListOfProject' do
+          o 'h2' do
+            o ClearProjectButton
+            o 'text', project.title
+          end
+          if tasks.any?
+            o TaskList, tasks: tasks
+          else
+            o 'p', '(empty)'
+          end
+          o TaskForm, due_date: DATE_UNSORTED, project_id: project.id
+        end
+      end
+    end
+
+    class ClearProjectButton < Ovto::Component
+      def render
+        o 'span.ClearProjectButton', onclick: ->{ actions.show_upcoming_tasks() } do
+          '←'
+        end
+      end
+    end
+
   end
 end
