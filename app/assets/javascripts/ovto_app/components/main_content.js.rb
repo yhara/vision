@@ -149,16 +149,16 @@ class MyApp < Ovto::App
           end
         end
       end
-    end
 
-    class MobileProjectListItem < Ovto::Component
-      def render(state:, project:)
-        n_tasks = Task.find_by_project(state.tasks, project.id).length
-        o 'li.MobileProjectListItem', {
-          onclick: ->{ actions.show_project(project_id: project.id) },
-        } do
-          o 'span.project_title', project.title
-          o 'span.n_tasks', "(#{n_tasks})"
+      class MobileProjectListItem < Ovto::Component
+        def render(state:, project:)
+          n_tasks = Task.find_by_project(state.tasks, project.id).length
+          o 'li.MobileProjectListItem', {
+            onclick: ->{ actions.show_project(project_id: project.id) },
+          } do
+            o 'span.project_title', project.title
+            o 'span.n_tasks', "(#{n_tasks})"
+          end
         end
       end
     end
@@ -180,15 +180,14 @@ class MyApp < Ovto::App
           o TaskForm, due_date: DATE_UNSORTED, project_id: project.id
         end
       end
-    end
 
-    class ClearProjectButton < Ovto::Component
-      def render
-        o 'span.ClearProjectButton', onclick: ->{ actions.show_upcoming_tasks() } do
-          '←'
+      class ClearProjectButton < Ovto::Component
+        def render
+          o 'span.ClearProjectButton', onclick: ->{ actions.show_upcoming_tasks() } do
+            '←'
+          end
         end
       end
     end
-
   end
 end
