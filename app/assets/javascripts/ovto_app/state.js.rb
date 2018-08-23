@@ -78,5 +78,6 @@ class MyApp < Ovto::App
     item :selected_project_id, default: nil
     item :focused_task, default: nil
     item :drag_info, default: DragInfo.new
+    item :main_view, default: :normal  # or :projects
   end
 end

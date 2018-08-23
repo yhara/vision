@@ -9,6 +9,10 @@ class MyApp < Ovto::App
     include ProjectActions
     include TaskActions
 
+    def select_main_view(state:, view:)
+      return {main_view: view}
+    end
+
     def show_task_details(state:, task:)
       return {focused_task: task}
     end
