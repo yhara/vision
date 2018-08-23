@@ -1,4 +1,4 @@
-# (not yet)
+# v0.2.3 (2018-08-24)
 
 - feat(mobile): Show project list
 - feat(mobile): Disable user scaling
