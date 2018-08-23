@@ -15,12 +15,13 @@ class MyApp < Ovto::App
         return {tasks: tasks}
       end
 
-      def request_create_task(state:, title:, due_date:)
+      def request_create_task(state:, title:, due_date:, project_id:)
         params = {
           task: {
             title: title,
             done: '0',
             due_date: due_date,
+            project_id: project_id,
           }
         }
         Ovto.fetch('/tasks.json', 'POST', params).then {|json|

@@ -28,6 +28,7 @@ class MyApp < Ovto::App
           else
             o 'p', '(empty)'
           end
+          o TaskForm, due_date: DATE_UNSORTED, project_id: project.id
         end
       end
     end
@@ -138,7 +139,7 @@ class MyApp < Ovto::App
     end
 
     class TaskForm < Ovto::Component
-      def render(due_date:)
+      def render(due_date:, project_id: nil)
         unsorted = (due_date == DATE_UNSORTED)
         o '.TaskForm' do
           id_title = "new-task-#{due_date}-title"
@@ -152,7 +153,7 @@ class MyApp < Ovto::App
           o 'input.add-task-button', type: 'button', value: 'Add', onclick: ->{
             new_title = `document.querySelector('#'+id_title).value`
             new_due_date = `document.querySelector('#'+id_due_date).value`
-            actions.request_create_task(title: new_title, due_date: new_due_date)
+            actions.request_create_task(title: new_title, due_date: new_due_date, project_id: project_id)
             `document.querySelector('#'+id_title).value = ""`
           }
         end
