@@ -17,24 +17,7 @@ class MyApp < Ovto::App
       end
     end
 
-    class MainContent < Ovto::Component
-      def render(state:, main_view:)
-        o '.MainContent' do
-          o ShowProjectsLink
-          case main_view.type
-          when :upcoming_tasks
-            o TaskListByDueDate, tasks: state.tasks
-          when :projects
-            o MobileProjectList, projects: state.projects
-          when :project
-            o TaskListOfProject, project_id: main_view.project_id
-          else
-            raise "state.main_view is invalid: #{main_view}"
-          end
-        end
-      end
-    end
-
+    # Only shown in mobile devices
     class ShowProjectsLink < Ovto::Component
       def render
         o '.ShowProjectsLink', onclick: ->{ actions.show_projects() } do

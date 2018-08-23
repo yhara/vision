@@ -2,6 +2,24 @@ require 'ovto'
 
 class MyApp < Ovto::App
   class View < Ovto::Component
+    class MainContent < Ovto::Component
+      def render(state:, main_view:)
+        o '.MainContent' do
+          o ShowProjectsLink
+          case main_view.type
+          when :upcoming_tasks
+            o TaskListByDueDate, tasks: state.tasks
+          when :projects
+            o MobileProjectList, projects: state.projects
+          when :project
+            o TaskListOfProject, project_id: main_view.project_id
+          else
+            raise "state.main_view is invalid: #{main_view}"
+          end
+        end
+      end
+    end
+
     class TaskListOfProject < Ovto::Component
       def render(state:, project_id:)
         project = Project.find(state.projects, project_id)
