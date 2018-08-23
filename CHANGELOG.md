@@ -1,6 +1,7 @@
 # (not yet)
 
 - feat(mobile): Disable user scaling
+- feat: Add button to hide flashes
 
 # v0.2.2 (2018-08-23)
 

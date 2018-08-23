@@ -13,8 +13,16 @@
   <body>
     <h1><a href='/'>Vision</a></h1>
     <div>
-      <p id="notice"><%= flash[:notice] %></p>
-      <p id="alert"><%= flash[:alert] %></p>
+      <% [:notice, :alert].each do |key| %>
+        <% if flash[key] %>
+          <p id="flash_<%= key %>">
+            <span onclick="document.querySelector('#flash_<%= key %>').style.display = 'none'">
+              [x]
+            </span>
+            <%= flash[key] %>
+          </p>
+        <% end %>
+      <% end %>
     </div>
     <%= yield %>
   </body>
