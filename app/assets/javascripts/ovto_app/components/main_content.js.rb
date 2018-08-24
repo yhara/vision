@@ -112,7 +112,7 @@ class MyApp < Ovto::App
             o 'span.title', task.title
             o 'span.project-title', (project && project.title)
             if show_due_date
-              o 'span.due-date', task.due_date.to_s
+              o 'span.due-date', task.due_date && task.due_date.strftime('%-m/%-d')
             end
           end
         end

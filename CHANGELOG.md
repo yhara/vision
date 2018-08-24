@@ -1,6 +1,6 @@
 # (not yet)
 
-- feat: Do not show due_date when it is obvious
+- feat: Simplify expressions of due_date
 - fix(mobile): Fix 'Add' button is hanging out
 
 # v0.2.3 (2018-08-24)
