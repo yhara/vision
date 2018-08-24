@@ -1,3 +1,7 @@
+# (not yet)
+
+- fix(mobile): Fix 'Add' button is hanging out
+
 # v0.2.3 (2018-08-24)
 
 - feat(mobile): Show project list
