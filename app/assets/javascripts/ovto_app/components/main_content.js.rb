@@ -62,19 +62,19 @@ class MyApp < Ovto::App
           class: (is_hovered && 'hover')
         } do
           o 'h2', label
-          o TaskList, tasks: tasks
+          o TaskList, tasks: tasks, show_due_date: (due_date == DATE_UNSORTED)
           o TaskForm, due_date: due_date
         end
       end
     end
 
     class TaskList < Ovto::Component
-      def render(tasks:)
+      def render(tasks:, show_due_date:)
         o '.TaskList' do
           o 'ul' do
             tasks.each do |task|
               o 'li', key: task.id do
-                o TaskListItem, {task: task}
+                o TaskListItem, task: task, show_due_date: show_due_date
               end
             end
           end
@@ -83,14 +83,14 @@ class MyApp < Ovto::App
     end
 
     class TaskListItem < Ovto::Component
-      def render(state:, task:)
+      def render(state:, task:, show_due_date:)
         project = Project.find(state.projects, task.project_id)
         o '.TaskListItem', {
           draggable: true,
           ondragstart: ->{ actions.drag_start(task: task) },
         } do
           o CompleteTaskButton, task: task
-          o TaskListItemDetails, task: task
+          o TaskListItemDetails, task: task, show_due_date: show_due_date
         end
       end
 
@@ -106,12 +106,14 @@ class MyApp < Ovto::App
       end
 
       class TaskListItemDetails < Ovto::Component
-        def render(state:, task:)
+        def render(state:, task:, show_due_date:)
           project = Project.find(state.projects, task.project_id)
           o '.TaskListItemDetails', onclick: ->{ actions.show_task_details(task: task) } do
             o 'span.title', task.title
             o 'span.project-title', (project && project.title)
-            o 'span.due-date', task.due_date.to_s
+            if show_due_date
+              o 'span.due-date', task.due_date.to_s
+            end
           end
         end
       end
