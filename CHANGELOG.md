@@ -1,6 +1,7 @@
 # (not yet)
 
 - feat: Simplify expressions of due_date
+- feat: Press Enter in TaskForm to create a task
 - fix(mobile): Fix 'Add' button is hanging out
 
 # v0.2.3 (2018-08-24)

@@ -122,23 +122,24 @@ class MyApp < Ovto::App
     class TaskForm < Ovto::Component
       def render(due_date:, project_id: nil)
         unsorted = (due_date == DATE_UNSORTED)
-        o '.TaskForm' do
-          id_title = "new-task-#{due_date}-title"
-          id_due_date = "new-task-#{due_date}-due-date" 
+        id_title = "new-task-#{due_date}-title"
+        id_due_date = "new-task-#{due_date}-due-date" 
+        submit_form = ->{
+          new_title = `document.querySelector('#'+id_title).value`
+          new_due_date = `document.querySelector('#'+id_due_date).value`
+          actions.request_create_task(title: new_title, due_date: new_due_date, project_id: project_id)
+          # Clear inputs
+          `document.querySelector('#'+id_title).value = ""`
+          `document.querySelector('#'+id_due_date).value = ""`
+        }
+        o 'form.TaskForm', onsubmit: ->(e){ submit_form.call; e.preventDefault() } do
           o 'input.new-task-title', id: id_title, type: 'text'
           if unsorted
             o 'input.new-task-due-date', id: id_due_date, type: 'date'
           else
             o 'input.new-task-due-date', id: id_due_date, type: 'hidden', value: due_date
           end
-          o 'input.add-task-button', type: 'button', value: 'Add', onclick: ->{
-            new_title = `document.querySelector('#'+id_title).value`
-            new_due_date = `document.querySelector('#'+id_due_date).value`
-            actions.request_create_task(title: new_title, due_date: new_due_date, project_id: project_id)
-            # Clear inputs
-            `document.querySelector('#'+id_title).value = ""`
-            `document.querySelector('#'+id_due_date).value = ""`
-          }
+          o 'input.add-task-button', type: 'button', value: 'Add', onclick: submit_form
         end
       end
     end
