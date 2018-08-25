@@ -1,4 +1,4 @@
-# v0.2.4 (2018-08-26)
+# v0.2.5 (2018-08-26)
 
 - feat: Simplified how due_date is shown
 - feat: Press Enter in TaskForm to create a task
