@@ -1,8 +1,8 @@
-# (not yet)
+# v0.2.4 (2018-08-26)
 
-- feat: Simplify expressions of due_date
+- feat: Simplified how due_date is shown
 - feat: Press Enter in TaskForm to create a task
-- fix(mobile): Fix 'Add' button is hanging out
+- fix(mobile): Fixed 'Add' button was out of the mobile screen
 
 # v0.2.3 (2018-08-24)
 
