@@ -1,3 +1,7 @@
+# (not yet)
+
+- perf: Add index
+
 # v0.2.5 (2018-08-26)
 
 - feat: Simplified how due_date is shown
