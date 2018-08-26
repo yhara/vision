@@ -1,4 +1,4 @@
-# (not yet)
+# v0.2.6 (2018-08-27)
 
 - fix: Project view was broken
 - feat: Add space between project title and due_date 
