@@ -72,5 +72,10 @@ group :development do
   gem 'capistrano-rbenv'
 end
 
+group :test do
+  gem 'shoulda-context'
+  gem 'factory_bot_rails'
+end
+
 gem 'opal-rails'
 gem 'ovto', github: 'yhara/ovto'
