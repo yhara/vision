@@ -1,6 +1,7 @@
 # (not yet)
 
 - fix: Project view was broken
+- feat: Add space between project title and due_date 
 - perf: Add index
 
 # v0.2.5 (2018-08-26)
