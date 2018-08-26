@@ -69,7 +69,7 @@ class MyApp < Ovto::App
     end
 
     class TaskList < Ovto::Component
-      def render(tasks:, show_due_date:)
+      def render(tasks:, show_due_date: true)
         o '.TaskList' do
           o 'ul' do
             tasks.each do |task|

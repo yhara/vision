@@ -1,5 +1,6 @@
 # (not yet)
 
+- fix: Project view was broken
 - perf: Add index
 
 # v0.2.5 (2018-08-26)
