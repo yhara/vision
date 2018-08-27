@@ -81,6 +81,7 @@ class MyApp < Ovto::App
     item :tasks, default: []
     item :projects, default: []
     item :focused_task, default: nil
+    item :editing_task, default: nil
     item :drag_info, default: DragInfo.new
     item :main_view, default: MainViewInfo.new(type: :upcoming_tasks)
   end

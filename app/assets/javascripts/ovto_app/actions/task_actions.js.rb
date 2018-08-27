@@ -68,6 +68,14 @@ class MyApp < Ovto::App
           return {tasks: Task.merge(state.tasks, updated_task)}
         end
       end
+
+      def open_task_editor(state:, task:)
+        return {focused_task: task, editing_task: task.dup}
+      end
+
+      def close_task_editor(state:)
+        return {focused_task: nil, editing_task: nil}
+      end
     end
   end
 end

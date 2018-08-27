@@ -36,12 +36,12 @@ class MyApp < Ovto::App
                   due_date: `document.querySelector('#'+id_due_date).value`,
                   project_id: `document.querySelector('#'+id_project).value`.to_i,
                 })
-                actions.hide_task_details()
+                actions.close_task_editor()
               }
               o 'a', {
                 href: '#', onclick: ->(e){
                   e.preventDefault()
-                  actions.hide_task_details()
+                  actions.close_task_editor()
                 }
               }, 'Close'
             end

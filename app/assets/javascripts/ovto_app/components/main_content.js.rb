@@ -108,7 +108,7 @@ class MyApp < Ovto::App
       class TaskListItemDetails < Ovto::Component
         def render(state:, task:, show_due_date:)
           project = Project.find(state.projects, task.project_id)
-          o '.TaskListItemDetails', onclick: ->{ actions.show_task_details(task: task) } do
+          o '.TaskListItemDetails', onclick: ->{ actions.open_task_editor(task: task) } do
             o 'span.title', task.title
             o 'span.project-title', (project && project.title)
             if show_due_date
