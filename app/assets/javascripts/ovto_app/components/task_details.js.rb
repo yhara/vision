@@ -3,7 +3,8 @@ require 'ovto'
 class MyApp < Ovto::App
   class View < Ovto::Component
     class TaskDetails < Ovto::Component
-      def render(state:, task:)
+      def render(state:, focused_task:)
+        task = state.editing_task
         id_title = "TaskDetails-title"
         id_due_date = "TaskDetails-due-date" 
         id_project = "TaskDetails-project"
@@ -11,15 +12,22 @@ class MyApp < Ovto::App
           o '.TaskDetails' do
             o 'div' do
               o 'label', {for: id_title}, 'Title:'
-              o 'input', id: id_title, type: 'text', value: task.title
+              o 'input', id: id_title, type: 'text', value: task.title,
+                oninput: ->(e){ actions.edit_task(diff: {title: e.target.value}) }
             end
             o 'div' do
               o 'label', {for: id_due_date}, 'Due date:'
-              o 'input', id: id_due_date, type: 'date', value: task.due_date
+              o 'input', id: id_due_date, type: 'date', value: task.due_date,
+                onchange: ->(e){ actions.edit_task(diff: {due_date: e.target.value}) }
             end
             o 'div' do
               o 'label', {for: id_project}, 'Project:'
-              o 'select', id: id_project do
+              o 'select', {
+                id: id_project,
+                onchange: ->(e){ actions.edit_task(diff: {
+                  project_id: e.target.value.empty? ? nil : e.target.value.to_i }) 
+                }
+              } do
                 o 'option', {value: ""}, "---"
                 state.projects.each do |project|
                   o 'option', {
@@ -31,11 +39,7 @@ class MyApp < Ovto::App
             end
             o 'div' do
               o 'input.save-button', type: 'button', value: 'Save', onclick: ->{
-                actions.request_update_task(task: task, updates: {
-                  title: `document.querySelector('#'+id_title).value`,
-                  due_date: `document.querySelector('#'+id_due_date).value`,
-                  project_id: `document.querySelector('#'+id_project).value`.to_i,
-                })
+                actions.request_update_task(task: task, updates: task.to_h)
                 actions.close_task_editor()
               }
               o 'a', {

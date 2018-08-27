@@ -12,7 +12,7 @@ class MyApp < Ovto::App
           o Sidebar
         end
         if state.focused_task
-          o TaskDetails, task: state.focused_task
+          o TaskDetails, focused_task: state.focused_task
         end
       end
     end
