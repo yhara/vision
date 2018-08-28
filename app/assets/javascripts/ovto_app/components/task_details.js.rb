@@ -8,8 +8,6 @@ class MyApp < Ovto::App
         id_title = "TaskDetails-title"
         id_due_date = "TaskDetails-due-date" 
         id_project = "TaskDetails-project"
-        id_interval_type = "TaskDetails-interval-type"
-        id_interval_value = "TaskDetails-interval-value"
         o '.TaskDetailsContainer' do
           o '.TaskDetails' do
             o 'div' do
@@ -42,59 +40,7 @@ class MyApp < Ovto::App
               end
             end
 
-            o 'div' do
-              o 'label', {for: id_interval_type}, 'Interval:'
-              o 'select', {
-                id: id_interval_type,
-                onchange: ->(e){
-                  actions.edit_task(diff: {
-                    interval_type: (e.target.value.empty? ? nil : e.target.value),
-                    interval_value: nil,
-                  })
-                }
-              } do
-                o 'option', {value: ""}, "None"
-                o 'option', {value: "n_days"}, "N Days"
-                o 'option', {value: "day_of_week"}, "Day of week"
-                o 'option', {value: "day_of_month"}, "Day of month"
-                o 'option', {value: "day_of_year"}, "Day of year"
-              end
-
-              case task.interval_type
-              when nil
-                ""
-              when :n_days
-                o 'input', id: id_interval_value, type: 'number', value: task.interval_value, min: 1,
-                  onchange: ->(e){ actions.edit_task(diff: {interval_value: e.target.value.to_i}) }
-              when :day_of_week
-                o 'select', {
-                  id: id_interval_value,
-                  onchange: ->(e){ actions.edit_task(diff: {interval_value: e.target.value.to_i}) }
-                } do
-                  o 'option', {value: "0", selected: task.interval_value == 0}, "Sun"
-                  o 'option', {value: "1", selected: task.interval_value == 1}, "Mon"
-                  o 'option', {value: "2", selected: task.interval_value == 2}, "Tue"
-                  o 'option', {value: "3", selected: task.interval_value == 3}, "Wed"
-                  o 'option', {value: "4", selected: task.interval_value == 4}, "Thu"
-                  o 'option', {value: "5", selected: task.interval_value == 5}, "Fri"
-                  o 'option', {value: "6", selected: task.interval_value == 6}, "Sat"
-                end
-              when :day_of_month
-                o 'input', id: id_interval_value, type: 'number', value: task.interval_value, min: 1, max: 31,
-                  onchange: ->(e){ actions.edit_task(diff: {interval_value: e.target.value}) }
-              when :day_of_year
-                interval_value = task.interval_value || 101
-                m, d = interval_value.divmod(100)
-                o 'text', "XXXX-"
-                o 'input', id: id_interval_value, type: 'number', value: m, min: 1, max: 12,
-                  onchange: ->(e){ actions.edit_task(diff: {interval_value: e.target.value.to_i * 100 + d }) }
-                o 'text', "-"
-                o 'input', type: 'number', value: d, min: 1, max: 31,
-                  onchange: ->(e){ actions.edit_task(diff: {interval_value: m * 100 + e.target.value.to_i}) }
-              else
-                raise "Unexpected interval_type"
-              end
-            end
+            o TaskIntervalInput, task: task
 
             o 'div' do
               o 'input.save-button', type: 'button', value: 'Save', onclick: ->{
@@ -107,6 +53,66 @@ class MyApp < Ovto::App
                   actions.close_task_editor()
                 }
               }, 'Close'
+            end
+          end
+        end
+      end
+
+      class TaskIntervalInput < Ovto::Component
+        def render(task:)
+          id_interval_type = "TaskDetails-interval-type"
+          id_interval_value = "TaskDetails-interval-value"
+          o 'div' do
+            o 'label', {for: id_interval_type}, 'Interval:'
+            o 'select', {
+              id: id_interval_type,
+              onchange: ->(e){
+                actions.edit_task(diff: {
+                  interval_type: (e.target.value.empty? ? nil : e.target.value),
+                  interval_value: nil,
+                })
+              }
+            } do
+              o 'option', {value: ""}, "None"
+              o 'option', {value: "n_days"}, "N Days"
+              o 'option', {value: "day_of_week"}, "Day of week"
+              o 'option', {value: "day_of_month"}, "Day of month"
+              o 'option', {value: "day_of_year"}, "Day of year"
+            end
+
+            case task.interval_type
+            when nil
+              ""
+            when :n_days
+              o 'input', id: id_interval_value, type: 'number', value: task.interval_value, min: 1,
+                onchange: ->(e){ actions.edit_task(diff: {interval_value: e.target.value.to_i}) }
+            when :day_of_week
+              o 'select', {
+                id: id_interval_value,
+                onchange: ->(e){ actions.edit_task(diff: {interval_value: e.target.value.to_i}) }
+              } do
+                o 'option', {value: "0", selected: task.interval_value == 0}, "Sun"
+                o 'option', {value: "1", selected: task.interval_value == 1}, "Mon"
+                o 'option', {value: "2", selected: task.interval_value == 2}, "Tue"
+                o 'option', {value: "3", selected: task.interval_value == 3}, "Wed"
+                o 'option', {value: "4", selected: task.interval_value == 4}, "Thu"
+                o 'option', {value: "5", selected: task.interval_value == 5}, "Fri"
+                o 'option', {value: "6", selected: task.interval_value == 6}, "Sat"
+              end
+            when :day_of_month
+              o 'input', id: id_interval_value, type: 'number', value: task.interval_value, min: 1, max: 31,
+                onchange: ->(e){ actions.edit_task(diff: {interval_value: e.target.value}) }
+            when :day_of_year
+              interval_value = task.interval_value || 101
+              m, d = interval_value.divmod(100)
+              o 'text', "XXXX-"
+              o 'input', id: id_interval_value, type: 'number', value: m, min: 1, max: 12,
+                onchange: ->(e){ actions.edit_task(diff: {interval_value: e.target.value.to_i * 100 + d }) }
+              o 'text', "-"
+              o 'input', type: 'number', value: d, min: 1, max: 31,
+                onchange: ->(e){ actions.edit_task(diff: {interval_value: m * 100 + e.target.value.to_i}) }
+            else
+              raise "Unexpected interval_type"
             end
           end
         end
