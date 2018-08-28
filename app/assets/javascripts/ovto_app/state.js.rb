@@ -7,6 +7,8 @@ class MyApp < Ovto::App
     item :done
     item :due_date
     item :project_id
+    item :interval_type
+    item :interval_value
     item :created_at
     item :updated_at
     item :url
