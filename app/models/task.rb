@@ -2,10 +2,11 @@ class Task < ApplicationRecord
   belongs_to :project, optional: true
 
   enum interval_type: {
-    n_days: 0,
-    day_of_week: 1,
-    day_of_month: 2,
-    day_of_year: 3,
+    every_n_days: 0,
+    n_days_after: 1,
+    day_of_week:  2,
+    day_of_month: 3,
+    day_of_year:  4,
   }
 
   validates :title, presence: true
@@ -36,7 +37,9 @@ class Task < ApplicationRecord
 
   def next_due_date(today)
     case interval_type
-    when "n_days"
+    when "every_n_days"
+      return (self.due_date || today) + interval_value
+    when "n_days_after"
       return today + interval_value
     when "day_of_week"
       dw = %i(sunday monday tuesday wednesday thursday friday saturday)[interval_value]

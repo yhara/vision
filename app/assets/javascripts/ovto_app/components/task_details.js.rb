@@ -81,7 +81,8 @@ class MyApp < Ovto::App
                 }
               } do
                 o 'option', {selected: (task.interval_type == nil), value: ""}, "None"
-                o 'option', {selected: (task.interval_type == "n_days"), value: "n_days"}, "N Days"
+                o 'option', {selected: (task.interval_type == "every_n_days"), value: "every_n_days"}, "Every N days"
+                o 'option', {selected: (task.interval_type == "n_days_after"), value: "n_days_after"}, "N days after"
                 o 'option', {selected: (task.interval_type == "day_of_week"), value: "day_of_week"}, "Day of week"
                 o 'option', {selected: (task.interval_type == "day_of_month"), value: "day_of_month"}, "Day of month"
                 o 'option', {selected: (task.interval_type == "day_of_year"), value: "day_of_year"}, "Day of year"
@@ -97,7 +98,7 @@ class MyApp < Ovto::App
               case task.interval_type
               when nil
                 ""
-              when :n_days
+              when :every_n_days, :n_days_after
                 o 'input', id: id_interval_value, type: 'number', value: task.interval_value, min: 1,
                   onchange: ->(e){ actions.edit_task(diff: {interval_value: e.target.value.to_i}) }
               when :day_of_week
