@@ -17,11 +17,13 @@ class MyApp < Ovto::App
               o 'input', id: id_title, type: 'text', value: task.title,
                 oninput: ->(e){ actions.edit_task(diff: {title: e.target.value}) }
             end
+
             o 'div' do
               o 'label', {for: id_due_date}, 'Due date:'
               o 'input', id: id_due_date, type: 'date', value: task.due_date,
                 onchange: ->(e){ actions.edit_task(diff: {due_date: e.target.value}) }
             end
+
             o 'div' do
               o 'label', {for: id_project}, 'Project:'
               o 'select', {
@@ -39,6 +41,7 @@ class MyApp < Ovto::App
                 end
               end
             end
+
             o 'div' do
               o 'label', {for: id_interval_type}, 'Interval:'
               o 'select', {
@@ -92,6 +95,7 @@ class MyApp < Ovto::App
                 raise "Unexpected interval_type"
               end
             end
+
             o 'div' do
               o 'input.save-button', type: 'button', value: 'Save', onclick: ->{
                 actions.request_update_task(task: task, updates: task.to_h)
