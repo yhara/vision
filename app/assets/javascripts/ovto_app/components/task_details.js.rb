@@ -31,10 +31,12 @@ class MyApp < Ovto::App
             end
             o 'div' do
               o 'input.save-button', type: 'button', value: 'Save', onclick: ->{
+                new_project_id_str = `document.querySelector('#'+id_project).value`
+                new_project_id = new_project_id_str == "" ? nil : new_project_id_str.to_i
                 actions.request_update_task(task: task, updates: {
                   title: `document.querySelector('#'+id_title).value`,
                   due_date: `document.querySelector('#'+id_due_date).value`,
-                  project_id: `document.querySelector('#'+id_project).value`.to_i,
+                  project_id: new_project_id,
                 })
                 actions.hide_task_details()
               }
