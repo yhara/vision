@@ -61,13 +61,13 @@ class MyApp < Ovto::App
       class TaskIntervalInput < Ovto::Component
         def render(task:)
           o '.TaskIntervalInput' do
-            o TaskIntervalTypeInput
+            o TaskIntervalTypeInput, task: task
             o TaskIntervalValueInput, task: task
           end
         end
 
         class TaskIntervalTypeInput < Ovto::Component
-          def render
+          def render(task:)
             id_interval_type = "TaskDetails-interval-type"
             o '.TaskIntervalTypeInput' do
               o 'label', {for: id_interval_type}, 'Interval:'
@@ -80,11 +80,11 @@ class MyApp < Ovto::App
                   })
                 }
               } do
-                o 'option', {value: ""}, "None"
-                o 'option', {value: "n_days"}, "N Days"
-                o 'option', {value: "day_of_week"}, "Day of week"
-                o 'option', {value: "day_of_month"}, "Day of month"
-                o 'option', {value: "day_of_year"}, "Day of year"
+                o 'option', {selected: (task.interval_type == nil), value: ""}, "None"
+                o 'option', {selected: (task.interval_type == "n_days"), value: "n_days"}, "N Days"
+                o 'option', {selected: (task.interval_type == "day_of_week"), value: "day_of_week"}, "Day of week"
+                o 'option', {selected: (task.interval_type == "day_of_month"), value: "day_of_month"}, "Day of month"
+                o 'option', {selected: (task.interval_type == "day_of_year"), value: "day_of_year"}, "Day of year"
               end
             end
           end
