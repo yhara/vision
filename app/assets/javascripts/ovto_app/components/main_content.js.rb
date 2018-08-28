@@ -99,7 +99,7 @@ class MyApp < Ovto::App
           o 'span.CompleteTaskButton' do
             o 'a', {
               href: "#",
-              onclick: ->{ actions.request_update_task(task: task, updates: {done: true}); false }
+              onclick: ->{ actions.request_update_task(task: task.merge(done: true)); false }
             }, "○"
           end
         end

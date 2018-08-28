@@ -44,7 +44,7 @@ class MyApp < Ovto::App
 
             o 'div' do
               o 'input.save-button', type: 'button', value: 'Save', onclick: ->{
-                actions.request_update_task(task: task, updates: task.to_h)
+                actions.request_update_task(task: task)
                 actions.close_task_editor()
               }
               o 'a', {
