@@ -8,7 +8,8 @@ class Task < ApplicationRecord
     day_of_year: 3,
   }
 
-  validates :title, {presence: true}
+  validates :title, presence: true
+  validates :project, presence: true, if: ->{ project_id != nil }
   validates :interval_value, presence: true, if: ->{ interval_type != nil }
   validates :interval_value, numericality: { greater_than_or_equal_to: 1 }, if: ->{ interval_type == "n_days" }
   validates :interval_value, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 6 }, if: ->{ interval_type == "day_of_week" }
