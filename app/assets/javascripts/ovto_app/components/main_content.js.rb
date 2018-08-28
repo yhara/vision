@@ -114,6 +114,9 @@ class MyApp < Ovto::App
             if show_due_date
               o 'span.due-date', task.due_date && task.due_date.strftime('%-m/%-d')
             end
+            if task.interval_type
+              o 'span.has-interval'
+            end
           end
         end
       end
