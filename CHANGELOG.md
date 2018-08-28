@@ -1,3 +1,7 @@
+# (not yet)
+
+- fix: project_id is set to 0 when '---' is selected
+
 # v0.2.6 (2018-08-27)
 
 - fix: Project view was broken
