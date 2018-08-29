@@ -2,6 +2,7 @@ require 'test_helper'
 
 class TasksControllerTest < ActionDispatch::IntegrationTest
   setup do
+    login_user(users(:one))
     @task = tasks(:one)
   end
 
