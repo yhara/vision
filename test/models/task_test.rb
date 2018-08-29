@@ -1,6 +1,24 @@
 require 'test_helper'
 
 class TaskTest < ActiveSupport::TestCase
+  context '#next_task' do
+    should 'return the next task (if any)' do
+      task = FactoryBot.create(:task,
+                               project: projects(:one),
+                               interval_type: :n_days_after, 
+                               interval_value: 1)
+      travel_to("2001-01-02")
+      task.update!(done: true)
+      next_task = task.reload.next_task
+      assert_equal task.title, next_task.title
+      assert_equal false, next_task.done
+      assert_equal Date.new(2001, 1, 3), next_task.due_date
+      assert_equal task.project_id, next_task.project_id
+      assert_equal task.interval_type, next_task.interval_type
+      assert_equal task.interval_value, next_task.interval_value
+    end
+  end
+
   context 'interval' do
     should 'every 7 days' do
       task = FactoryBot.create(:task,
