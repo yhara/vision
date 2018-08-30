@@ -7,7 +7,6 @@ class ActiveSupport::TestCase
   fixtures :all
 
   def login_user(user, password='passw0rd')
-    user = users(:one)
     post user_sessions_url, params: {email: user.email, password: password}
     follow_redirect!
   end
