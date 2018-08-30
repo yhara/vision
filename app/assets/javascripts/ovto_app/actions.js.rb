@@ -20,13 +20,5 @@ class MyApp < Ovto::App
     def show_project(state:, project_id:)
       return {main_view: MainViewInfo.new(type: :project, project_id: project_id)}
     end
-
-    def show_task_details(state:, task:)
-      return {focused_task: task}
-    end
-
-    def hide_task_details(state:)
-      return {focused_task: nil}
-    end
   end
 end

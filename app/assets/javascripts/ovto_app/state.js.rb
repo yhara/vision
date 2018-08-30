@@ -7,6 +7,8 @@ class MyApp < Ovto::App
     item :done
     item :due_date
     item :project_id
+    item :interval_type
+    item :interval_value
     item :created_at
     item :updated_at
     item :url
@@ -19,7 +21,7 @@ class MyApp < Ovto::App
     end
 
     def self.from_json(json)
-      Task.new(**json)
+      Task.new(**json.reject{|k,v| k == :next_task})
     end
 
     # Update the `task` in `tasks`
@@ -81,6 +83,7 @@ class MyApp < Ovto::App
     item :tasks, default: []
     item :projects, default: []
     item :focused_task, default: nil
+    item :editing_task, default: nil
     item :drag_info, default: DragInfo.new
     item :main_view, default: MainViewInfo.new(type: :upcoming_tasks)
   end

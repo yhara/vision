@@ -99,7 +99,7 @@ class MyApp < Ovto::App
           o 'span.CompleteTaskButton' do
             o 'a', {
               href: "#",
-              onclick: ->{ actions.request_update_task(task: task, updates: {done: true}); false }
+              onclick: ->{ actions.request_update_task(task: task.merge(done: true)); false }
             }, "○"
           end
         end
@@ -108,11 +108,14 @@ class MyApp < Ovto::App
       class TaskListItemDetails < Ovto::Component
         def render(state:, task:, show_due_date:)
           project = Project.find(state.projects, task.project_id)
-          o '.TaskListItemDetails', onclick: ->{ actions.show_task_details(task: task) } do
+          o '.TaskListItemDetails', onclick: ->{ actions.open_task_editor(task: task) } do
             o 'span.title', task.title
             o 'span.project-title', (project && project.title)
             if show_due_date
               o 'span.due-date', task.due_date && task.due_date.strftime('%-m/%-d')
+            end
+            if task.interval_type
+              o 'span.has-interval'
             end
           end
         end
