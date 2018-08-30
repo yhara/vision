@@ -28,13 +28,12 @@ class Task < ApplicationRecord
   # Create next task if interval_type is set
   def create_next_task
     return if !self.done || self.interval_type.nil?
-    next_task = Task.create!(title: self.title,
+    self.next_task = Task.create!(title: self.title,
                                   done: false,
                                   due_date: next_due_date(Date.today),
                                   project_id: self.project_id,
                                   interval_type: self.interval_type,
                                   interval_value: self.interval_value)
-    self.next_task = next_task
   end
 
   def next_due_date(today)
