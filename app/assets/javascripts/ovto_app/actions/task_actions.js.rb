@@ -25,13 +25,13 @@ class MyApp < Ovto::App
           }
         }
         Ovto.fetch('/tasks.json', 'POST', params).then {|json|
-          actions.receive_created_task(task: Task.from_json(json))
+          actions.receive_new_task(task: Task.from_json(json))
         }.fail {|e|
           console.log("request_create_task", e)
         }
       end
 
-      def receive_created_task(state:, task:)
+      def receive_new_task(state:, task:)
         return {tasks: state.tasks + [task]}
       end
 
@@ -41,7 +41,9 @@ class MyApp < Ovto::App
           task: task.to_h
         }
         Ovto.fetch("/tasks/#{task.id}.json", 'PUT', params).then {|json|
-          # OK.
+          if json[:next_task]
+            actions.receive_new_task(task: Task.from_json(json[:next_task]))
+          end
         }.fail {|e|
           console.log("update_task", e)
         }

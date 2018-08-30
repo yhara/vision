@@ -21,7 +21,7 @@ class MyApp < Ovto::App
     end
 
     def self.from_json(json)
-      Task.new(**json)
+      Task.new(**json.reject{|k,v| k == :next_task})
     end
 
     # Update the `task` in `tasks`
