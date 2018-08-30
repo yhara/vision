@@ -1,4 +1,4 @@
-# HEAD
+# v0.3.0 (2018-08-30)
 
 - feat: Recurring tasks
 - fix: project_id is set to 0 when '---' is selected
