@@ -1,3 +1,7 @@
+# v0.3.1 (2018-08-30)
+
+- fix: Tasks with project_id and no due_date was not shown
+
 # v0.3.0 (2018-08-30)
 
 - feat: Recurring tasks
