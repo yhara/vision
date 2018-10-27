@@ -1,3 +1,9 @@
+# v0.3.2 (2018-10-27)
+
+- security: Update rubyzip
+- chores: Bundle update (updated opal form 0.10.6 to 0.11.3)
+- chores: Moved bootsnap cache to /tmp
+
 # v0.3.1 (2018-08-30)
 
 - fix: Tasks with project_id and no due_date was not shown
