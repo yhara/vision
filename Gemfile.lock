@@ -1,8 +1,9 @@
-PATH
-  remote: ../ovto
+GIT
+  remote: https://github.com/yhara/ovto.git
+  revision: b47c64847b03fc9c214db95dd09e3aad4911d288
   specs:
     ovto (0.1.0)
-      opal (~> 0.11)
+      opal (>= 0.10)
 
 GEM
   remote: https://rubygems.org/
