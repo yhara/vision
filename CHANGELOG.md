@@ -1,3 +1,7 @@
+# v0.3.3 (2018-11-07)
+
+- security: Update loofah, rack
+
 # v0.3.2 (2018-10-27)
 
 - security: Update rubyzip
