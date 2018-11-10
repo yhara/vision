@@ -1,3 +1,7 @@
+# HEAD
+
+- change: Remove DnD support on mobile devices (was not so useful)
+
 # v0.3.3 (2018-11-07)
 
 - security: Update loofah, rack

@@ -1,13 +1,6 @@
 <div id='ovto-view'></div>
 <div id='ovto-debug'></div>
 
-<%= javascript_tag do %>
-    MobileDragDrop.polyfill({
-        // use this to make use of the scroll behaviour
-        //dragImageTranslateOverride: MobileDragDrop.scrollBehaviourDragImageTranslateOverride
-    });
-<% end %>
-
 <%= opal_tag do %>
   MyApp.start
 <% end %>
