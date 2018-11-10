@@ -23,7 +23,7 @@ class MyApp < Ovto::App
     class TaskListByDueDate < Ovto::Component
       def render(tasks:)
         task_groups = [
-          { label: 'Unsorted/Outdated',
+          { label: nil,
             due_date: DATE_UNSORTED,
             tasks: Task.unsorted_or_outdated(tasks) }
         ]
@@ -61,7 +61,7 @@ class MyApp < Ovto::App
           ondrop: ->(e){ actions.drag_drop() },
           class: (is_hovered && 'hover')
         } do
-          o 'h2', label
+          o 'h2', label if label
           o TaskList, tasks: tasks, show_due_date: (due_date == DATE_UNSORTED)
           o TaskForm, due_date: due_date
         end
