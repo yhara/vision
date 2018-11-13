@@ -5,10 +5,10 @@ require_relative 'config/application'
 
 Rails.application.load_tasks
 
-module Vision; VERSION = '0.4.0'; end
+module Vision; VERSION = '0.4.1'; end
 desc "git ci, git tag and git push"
 task :release do
-  sh "git diff"
+  sh "git diff HEAD"
   v = "v#{Vision::VERSION}"
   puts "release as #{v}? [y/N]"
   break unless $stdin.gets.chomp == "y"
