@@ -78,5 +78,4 @@ group :test do
 end
 
 gem 'opal-rails'
-#gem 'ovto', github: 'yhara/ovto'
-gem 'ovto' #, path: '../ovto'
+gem 'ovto'#, path: '../ovto'
