@@ -11,6 +11,9 @@ class MyApp < Ovto::App
           o '.connecting', {
             class: (state.n_connections > 0 ? 'active' : '')
           }, "connecting..."
+          o 'h1', {
+            onclick: ->{ actions.show_upcoming_tasks(); actions.get_tasks() }
+          }, 'Vision'
         end
         o '.Main' do
           o MainContent, main_view: state.main_view

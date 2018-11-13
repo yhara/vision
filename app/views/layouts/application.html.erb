@@ -11,7 +11,9 @@
   </head>
 
   <body>
-    <h1><a href='/'>Vision</a></h1>
+    <% unless @no_header %>
+      <h1><a href='/'>Vision</a></h1>
+    <% end %>
     <div>
       <% [:notice, :alert].each do |key| %>
         <% if flash[key] %>

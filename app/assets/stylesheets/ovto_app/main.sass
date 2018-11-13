@@ -1,3 +1,5 @@
+@import "_mixins.sass"
+
 // Narrow devices
 @media (max-width: 399px)
   .MainContent
@@ -48,10 +50,12 @@ div
   padding: 0
   //border: 1px dashed orange  // Debug
 
-h1
-  text-align: center
 
 .Header
+  h1
+    @include clickable
+    text-align: center
+    text-decoration: underline
 
 .connecting
   position: fixed
