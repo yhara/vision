@@ -175,7 +175,6 @@ class MyApp < Ovto::App
         tasks = Task.find_by_project(state.tasks, project.id)
         o '.TaskListOfProject' do
           o 'h2' do
-            o ClearProjectButton
             o 'text', project.title
           end
           if tasks.any?
@@ -184,14 +183,6 @@ class MyApp < Ovto::App
             o 'p', '(empty)'
           end
           o TaskForm, due_date: DATE_UNSORTED, project_id: project.id
-        end
-      end
-
-      class ClearProjectButton < Ovto::Component
-        def render
-          o 'span.ClearProjectButton', onclick: ->{ actions.show_upcoming_tasks() } do
-            '←'
-          end
         end
       end
     end
