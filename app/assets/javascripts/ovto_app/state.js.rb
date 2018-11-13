@@ -88,5 +88,6 @@ class MyApp < Ovto::App
     item :editing_task, default: nil
     item :drag_info, default: DragInfo.new
     item :main_view, default: MainViewInfo.new(type: :upcoming_tasks)
+    item :n_connections, default: 0
   end
 end

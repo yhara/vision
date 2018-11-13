@@ -4,7 +4,7 @@ class MyApp < Ovto::App
   class Actions < Ovto::Actions
     module TaskActions
       def get_tasks(state:)
-        Ovto.fetch('/tasks.json').then {|json|
+        fetch('/tasks.json').then {|json|
           actions.receive_tasks(tasks: json.map{|x| Task.from_json(x)})
         }.fail {|e|
           console.log("get_tasks", e)
@@ -24,7 +24,7 @@ class MyApp < Ovto::App
             project_id: project_id,
           }
         }
-        Ovto.fetch('/tasks.json', 'POST', params).then {|json|
+        fetch('/tasks.json', 'POST', params).then {|json|
           actions.receive_new_task(task: Task.from_json(json))
         }.fail {|e|
           console.log("request_create_task", e)
@@ -40,7 +40,7 @@ class MyApp < Ovto::App
           _method: "patch",
           task: task.to_h
         }
-        Ovto.fetch("/tasks/#{task.id}.json", 'PUT', params).then {|json|
+        fetch("/tasks/#{task.id}.json", 'PUT', params).then {|json|
           if json[:next_task]
             actions.receive_new_task(task: Task.from_json(json[:next_task]))
           end

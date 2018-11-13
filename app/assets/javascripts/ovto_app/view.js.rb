@@ -7,6 +7,11 @@ class MyApp < Ovto::App
   class View < Ovto::Component
     def render(state:)
       o '.View' do
+        o '.Header' do
+          o '.connecting', {
+            class: (state.n_connections > 0 ? 'active' : '')
+          }, "connecting..."
+        end
         o '.Main' do
           o MainContent, main_view: state.main_view
           o Sidebar

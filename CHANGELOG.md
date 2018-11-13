@@ -1,5 +1,6 @@
 # HEAD
 
+- feat: Show 'connecting...' when network is slow
 - change: Remove DnD support on mobile devices (was not so useful)
 
 # v0.3.3 (2018-11-07)
