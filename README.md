@@ -2,6 +2,10 @@
 
 A Todo-app written in Rails and [Ovto](https://github.com/yhara/ovto).
 
+## Screenshot
+
+![](screenshot.png)
+
 ## How to try
 
 - git clone
@@ -21,5 +25,4 @@ vision:
 
 MIT
 
-- mobile-drag-drop: https://github.com/timruffles/mobile-drag-drop/blob/master/LICENSE
 - normalize.css: https://github.com/necolas/normalize.css/blob/master/LICENSE.md
