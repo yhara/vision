@@ -4,7 +4,9 @@ require 'ovto_app/components/sidebar'
 require 'ovto_app/components/task_details'
 
 class MyApp < Ovto::App
-  class View < Ovto::Component
+  class MainComponent < Ovto::Component
+    include Components
+
     def render(state:)
       o '.View' do
         o '.Header' do
@@ -21,15 +23,6 @@ class MyApp < Ovto::App
         end
         if state.focused_task
           o TaskDetails, focused_task: state.focused_task
-        end
-      end
-    end
-
-    # Only shown in mobile devices
-    class ShowProjectsLink < Ovto::Component
-      def render
-        o '.ShowProjectsLink', onclick: ->{ actions.show_projects() } do
-          o 'div', "Projects"
         end
       end
     end

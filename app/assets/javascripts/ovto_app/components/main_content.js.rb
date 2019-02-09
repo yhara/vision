@@ -1,7 +1,7 @@
 require 'ovto'
 
 class MyApp < Ovto::App
-  class View < Ovto::Component
+  module Components
     class MainContent < Ovto::Component
       def render(state:, main_view:)
         o '.MainContent' do
@@ -16,6 +16,15 @@ class MyApp < Ovto::App
           else
             raise "state.main_view is invalid: #{main_view}"
           end
+        end
+      end
+    end
+
+    # Only shown in mobile devices
+    class ShowProjectsLink < Ovto::Component
+      def render
+        o '.ShowProjectsLink', onclick: ->{ actions.show_projects() } do
+          o 'div', "Projects"
         end
       end
     end

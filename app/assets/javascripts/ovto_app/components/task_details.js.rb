@@ -1,7 +1,7 @@
 require 'ovto'
 
 class MyApp < Ovto::App
-  class View < Ovto::Component
+  module Components
     class TaskDetails < Ovto::Component
       def render(state:, focused_task:)
         task = state.editing_task

@@ -1,7 +1,7 @@
 require 'ovto'
 
 class MyApp < Ovto::App
-  class View < Ovto::Component
+  class MainComponent < Ovto::Component
     class Sidebar < Ovto::Component
       def render(state:)
         o '.Sidebar' do
