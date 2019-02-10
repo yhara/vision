@@ -9,12 +9,18 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
-    query = Task.order(updated_at: :desc)
+    query = Task.all
     case params[:done]
     when "0"
       query = query.where(done: false)
     when "1"
       query = query.where(done: true)
+    end
+    case params[:sort]
+    when "updated_at"
+      query = query.order(updated_at: :desc)
+    when "due_date"
+      query = query.order(due_date: :desc)
     end
     @pagy, @tasks = pagy(query)
   end

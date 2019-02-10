@@ -6,6 +6,9 @@
   <%= link_to "All", action: :index, params: {} %>
   <%= link_to "Done", action: :index, params: {done: 1} %>
   <%= link_to "Undone", action: :index, params: {done: 0} %>
+  /
+  <%= link_to "Recent updated", action: :index, params: {sort: :updated_at} %>
+  <%= link_to "Due date",       action: :index, params: {sort: :due_date} %>
 </div>
 
 <table class='tasks'>
