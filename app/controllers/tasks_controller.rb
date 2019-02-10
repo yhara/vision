@@ -8,7 +8,14 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.undone
+    @tasks = Task.order(updated_at: :desc)
+    case params[:done]
+    when "0"
+      @tasks = @tasks.where(done: false)
+    when "1"
+      @tasks = @tasks.where(done: true)
+    end
+    @tasks = @tasks.limit(100)
   end
 
   # GET /tasks/1

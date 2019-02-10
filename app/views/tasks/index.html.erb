@@ -2,25 +2,37 @@
 
 <h1>Tasks</h1>
 
-<table>
+<div>
+  <%= link_to "All", action: :index, params: {} %>
+  <%= link_to "Done", action: :index, params: {done: 1} %>
+  <%= link_to "Undone", action: :index, params: {done: 0} %>
+</div>
+
+<table class='tasks'>
   <thead>
     <tr>
+      <th>Created/Due</th>
       <th>Title</th>
-      <th>Done</th>
-      <th>Due date</th>
-      <th colspan="3"></th>
+      <th>Project</th>
     </tr>
   </thead>
 
   <tbody>
     <% @tasks.each do |task| %>
       <tr>
-        <td><%= task.title %></td>
-        <td><%= task.done %></td>
-        <td><%= task.due_date %></td>
-        <td><%= link_to 'Show', task %></td>
-        <td><%= link_to 'Edit', edit_task_path(task) %></td>
-        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <span title='<%= task.created_at %>'>
+            <%= task.created_at.to_date %>
+          </span>
+          <% if task.due_date %>
+            (<%= task.due_date %>)
+          <% end %>
+        </td>
+        <td class='title'>
+          <% if task.done %>&#x2714;<% end %>
+          <%= link_to task.title, task %>
+        </td>
+        <td><%= task.project&.title %></td>
       </tr>
     <% end %>
   </tbody>
