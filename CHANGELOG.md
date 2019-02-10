@@ -1,6 +1,8 @@
 # HEAD
 
-- feat: Add 'Done:' checkbox to task editor
+- feat(task editor):
+  - Press Enter in the title input to submit
+  - Toggle done with checkbox
 - feat: Improve /tasks
 - chores: bundle update
 

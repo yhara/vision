@@ -17,7 +17,8 @@ class MyApp < Ovto::App
                 id: id_title,
                 type: 'text',
                 value: task.title,
-                oninput: ->(e){ actions.edit_task(diff: {title: e.target.value}) }
+                oninput: ->(e){ actions.edit_task(diff: {title: e.target.value}) },
+                onkeydown: ->(e){ submit(task) if e.key == "Enter" },
               }
             end
 
@@ -62,8 +63,7 @@ class MyApp < Ovto::App
 
             o 'div' do
               o 'input.save-button', type: 'button', value: 'Save', onclick: ->{
-                actions.request_update_task(task: task)
-                actions.close_task_editor()
+                submit(task)
               }
               o 'a', {
                 href: '#', onclick: ->(e){
@@ -74,6 +74,11 @@ class MyApp < Ovto::App
             end
           end
         end
+      end
+
+      def submit(task)
+        actions.request_update_task(task: task)
+        actions.close_task_editor()
       end
 
       class TaskIntervalInput < Ovto::Component
