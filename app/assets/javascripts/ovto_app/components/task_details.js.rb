@@ -13,14 +13,22 @@ class MyApp < Ovto::App
           o '.TaskDetails' do
             o 'div' do
               o 'label', {for: id_title}, 'Title:'
-              o 'input', id: id_title, type: 'text', value: task.title,
+              o 'input', {
+                id: id_title,
+                type: 'text',
+                value: task.title,
                 oninput: ->(e){ actions.edit_task(diff: {title: e.target.value}) }
+              }
             end
 
             o 'div' do
               o 'label', {for: id_due_date}, 'Due date:'
-              o 'input', id: id_due_date, type: 'date', value: task.due_date,
+              o 'input', {
+                id: id_due_date,
+                type: 'date',
+                value: task.due_date,
                 onchange: ->(e){ actions.edit_task(diff: {due_date: e.target.value}) }
+              }
             end
 
             o 'div' do
