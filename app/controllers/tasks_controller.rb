@@ -22,7 +22,10 @@ class TasksController < ApplicationController
     when "due_date"
       query = query.order(due_date: :desc)
     end
-    @pagy, @tasks = pagy(query)
+    respond_to do |format|
+      format.html { @pagy, @tasks = pagy(query) }
+      format.json { @tasks = query.all }
+    end
   end
 
   # GET /tasks/1

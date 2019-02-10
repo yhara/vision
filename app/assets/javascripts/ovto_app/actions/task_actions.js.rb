@@ -4,7 +4,7 @@ class MyApp < Ovto::App
   class Actions < Ovto::Actions
     module TaskActions
       def get_tasks(state:)
-        fetch('/tasks.json').then {|json|
+        fetch('/tasks.json?done=0').then {|json|
           actions.receive_tasks(tasks: json.map{|x| Task.from_json(x)})
         }.fail {|e|
           console.log("get_tasks", e)
