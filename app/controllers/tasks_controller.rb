@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  include Pagy::Backend
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def main
@@ -8,14 +9,14 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.order(updated_at: :desc)
+    query = Task.order(updated_at: :desc)
     case params[:done]
     when "0"
-      @tasks = @tasks.where(done: false)
+      query = query.where(done: false)
     when "1"
-      @tasks = @tasks.where(done: true)
+      query = query.where(done: true)
     end
-    @tasks = @tasks.limit(100)
+    @pagy, @tasks = pagy(query)
   end
 
   # GET /tasks/1

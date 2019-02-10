@@ -63,6 +63,7 @@ end
 
 gem 'acts_as_list'
 gem 'sorcery'
+gem 'pagy'
 
 group :development do
   gem 'capistrano'

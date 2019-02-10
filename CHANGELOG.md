@@ -1,5 +1,8 @@
 # HEAD
 
+- feat: Improve /tasks
+- chores: bundle update
+
 # v0.4.1 (2018-11-13)
 
 - feat: Tap h1 to reload
