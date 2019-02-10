@@ -1,5 +1,6 @@
 # HEAD
 
+- feat: Add 'Done:' checkbox to task editor
 - feat: Improve /tasks
 - chores: bundle update
 

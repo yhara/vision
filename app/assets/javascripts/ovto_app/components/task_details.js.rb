@@ -8,6 +8,7 @@ class MyApp < Ovto::App
         id_title = "TaskDetails-title"
         id_due_date = "TaskDetails-due-date" 
         id_project = "TaskDetails-project"
+        id_done = "TaskDetails-done"
         o '.TaskDetailsContainer' do
           o '.TaskDetails' do
             o 'div' do
@@ -41,6 +42,15 @@ class MyApp < Ovto::App
             end
 
             o TaskIntervalInput, task: task
+
+            o 'div' do
+              o 'label', {for: id_done}, 'Done:'
+              o 'input', {
+                id: id_done,
+                type: 'checkbox', 
+                onchange: ->(e) { actions.edit_task(diff: {done: e.target.checked}) }
+              }
+            end
 
             o 'div' do
               o 'input.save-button', type: 'button', value: 'Save', onclick: ->{
