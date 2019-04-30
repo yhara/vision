@@ -5,6 +5,7 @@
   - Toggle done with checkbox
 - feat: Improve /tasks
 - chores: bundle update
+- fix: Window scrolls to top when clicking CompleteTaskButton
 
 # v0.4.1 (2018-11-13)
 

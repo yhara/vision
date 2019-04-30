@@ -105,12 +105,9 @@ class MyApp < Ovto::App
 
       class CompleteTaskButton < Ovto::Component
         def render(task:)
-          o 'span.CompleteTaskButton' do
-            o 'a', {
-              href: "#",
-              onclick: ->{ actions.request_update_task(task: task.merge(done: true)); false }
-            }, "○"
-          end
+          o 'span.CompleteTaskButton', {
+            onclick: ->{ actions.request_update_task(task: task.merge(done: true)); false }
+          }, "○"
         end
       end
 
