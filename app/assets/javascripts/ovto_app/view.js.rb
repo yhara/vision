@@ -8,7 +8,7 @@ class MyApp < Ovto::App
     include Components
 
     def render(state:)
-      o '.View' do
+      o '.MainComponent' do
         o '.Header' do
           o '.connecting', {
             class: (state.n_connections > 0 ? 'active' : '')
