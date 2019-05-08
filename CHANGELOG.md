@@ -1,10 +1,9 @@
-# HEAD
+# v0.4.2 (2019-05-08)
 
 - feat(task editor):
   - Press Enter in the title input to submit
   - Toggle done with checkbox
 - feat: Improve /tasks
-- chores: bundle update
 - fix: Window scrolls to top when clicking CompleteTaskButton
 
 # v0.4.1 (2018-11-13)
