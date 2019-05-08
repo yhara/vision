@@ -5,7 +5,9 @@ require_relative 'config/application'
 
 Rails.application.load_tasks
 
-module Vision; VERSION = '0.4.1'; end
+module Vision
+  VERSION = File.read('CHANGELOG.md')[/v([\d\.]+) /, 1]
+end
 desc "git ci, git tag and git push"
 task :release do
   sh "git diff HEAD"
