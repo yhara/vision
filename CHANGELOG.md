@@ -1,3 +1,7 @@
+# v0.4.3 (2019-05-10)
+
+- security: bundle update
+
 # v0.4.2 (2019-05-08)
 
 - feat(task editor):
