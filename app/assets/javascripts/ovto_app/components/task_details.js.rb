@@ -9,7 +9,9 @@ class MyApp < Ovto::App
         id_due_date = "TaskDetails-due-date" 
         id_project = "TaskDetails-project"
         id_done = "TaskDetails-done"
-        o '.TaskDetailsContainer' do
+        o 'form.TaskDetailsContainer', {
+          onsubmit: ->(e){ submit(task); e.preventDefault() },
+        } do
           o '.TaskDetails' do
             o 'div' do
               o 'label', {for: id_title}, 'Title:'
@@ -18,7 +20,6 @@ class MyApp < Ovto::App
                 type: 'text',
                 value: task.title,
                 oninput: ->(e){ actions.edit_task(diff: {title: e.target.value}) },
-                onkeydown: ->(e){ submit(task) if e.key == "Enter" },
               }
             end
 

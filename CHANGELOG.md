@@ -1,3 +1,7 @@
+# HEAD
+
+- fix(task editor): Do not submit on pressing Enter for IME
+
 # v0.4.3 (2019-05-10)
 
 - security: bundle update
