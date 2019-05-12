@@ -97,7 +97,7 @@ class MyApp < Ovto::App
               o 'label', {for: id_interval_type}, 'Interval:'
               o 'select', {
                 id: id_interval_type,
-                onchange: ->(e){ change_interval_type(e) },
+                onchange: ->(e){ change_interval_type(e, task) },
               } do
                 o 'option', {selected: (task.interval_type == nil), value: ""}, "None"
                 o 'option', {selected: (task.interval_type == "every_n_days"), value: "every_n_days"}, "Every N days"
@@ -109,11 +109,17 @@ class MyApp < Ovto::App
             end
           end
 
-          def change_interval_type(e)
-            actions.edit_task(diff: {
+          def change_interval_type(e, task)
+            diff = {
               interval_type: (e.target.value.empty? ? nil : e.target.value),
               interval_value: nil,
-            })
+            }
+            # Set default due date if none
+            diff[:due_date] = Date.today if diff[:interval_type] && task.due_date.nil?
+            # Set default value for convenience
+            diff[:interval_value] = 1 if %w(every_n_days n_days_after).include?(diff[:interval_type])
+
+            actions.edit_task(diff: diff)
           end
         end
 

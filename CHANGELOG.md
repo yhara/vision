@@ -1,3 +1,7 @@
+# HEAD
+
+- feat(task editor): Set default value when creating interval tasks
+
 # v0.4.4 (2019-05-11)
 
 - fix(task editor): Do not submit on pressing Enter for IME
