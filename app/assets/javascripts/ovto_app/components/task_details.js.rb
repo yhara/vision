@@ -97,12 +97,7 @@ class MyApp < Ovto::App
               o 'label', {for: id_interval_type}, 'Interval:'
               o 'select', {
                 id: id_interval_type,
-                onchange: ->(e){
-                  actions.edit_task(diff: {
-                    interval_type: (e.target.value.empty? ? nil : e.target.value),
-                    interval_value: nil,
-                  })
-                }
+                onchange: ->(e){ change_interval_type(e) },
               } do
                 o 'option', {selected: (task.interval_type == nil), value: ""}, "None"
                 o 'option', {selected: (task.interval_type == "every_n_days"), value: "every_n_days"}, "Every N days"
@@ -112,6 +107,13 @@ class MyApp < Ovto::App
                 o 'option', {selected: (task.interval_type == "day_of_year"), value: "day_of_year"}, "Day of year"
               end
             end
+          end
+
+          def change_interval_type(e)
+            actions.edit_task(diff: {
+              interval_type: (e.target.value.empty? ? nil : e.target.value),
+              interval_value: nil,
+            })
           end
         end
 
