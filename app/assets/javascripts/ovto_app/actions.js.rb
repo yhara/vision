@@ -41,5 +41,15 @@ class MyApp < Ovto::App
     def show_project(state:, project_id:)
       return {main_view: MainViewInfo.new(type: :project, project_id: project_id)}
     end
+
+    def on_keydown(key:)
+      case key
+      when "Escape"
+        actions.close_task_editor()
+      else
+        #console.log("key", key)
+      end
+      nil
+    end
   end
 end

@@ -1,6 +1,7 @@
 # HEAD
 
 - feat(task editor): Set default value when creating interval tasks
+- feat(task editor): Press Escape to close editor
 
 # v0.4.4 (2019-05-11)
 

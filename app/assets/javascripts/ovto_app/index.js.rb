@@ -11,5 +11,10 @@ class MyApp < Ovto::App
   def setup
     actions.get_tasks
     actions.get_projects
+    %x{
+      document.addEventListener("keydown", e => {
+        #{actions.on_keydown(key: `e.key`) }
+      });
+    }
   end
 end
