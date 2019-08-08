@@ -7,12 +7,7 @@
 
 <p>
   <strong>Archived:</strong>
-  <%= @project.archived %>
-</p>
-
-<p>
-  <strong>Archived at:</strong>
-  <%= @project.archived_at %>
+  <%= @project.archived_at || 'No' %>
 </p>
 
 <%= link_to 'Edit', edit_project_path(@project) %> |

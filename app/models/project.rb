@@ -2,14 +2,10 @@ class Project < ApplicationRecord
   acts_as_list
   has_many :tasks
 
-  scope :active, ->{ where(archived: false).order(:position) }
-  scope :archived, ->{ where(archived: true).order(:position) }
-
-  before_validation do
-    self.archived = false if self.archived.nil?
-  end
+  scope :active, ->{ where(archived_at: nil).order(:position) }
+  scope :archived, ->{ where.not(archived_at: nil).order(:position) }
 
   def archive
-    update(archived: true, position: nil)
+    update(archived_at: Time.now, position: nil)
   end
 end

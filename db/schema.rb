@@ -10,11 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_29_083134) do
+ActiveRecord::Schema.define(version: 2019_05_03_072928) do
 
   create_table "projects", force: :cascade do |t|
     t.string "title", null: false
-    t.boolean "archived", null: false
     t.integer "position"
     t.datetime "archived_at"
     t.datetime "created_at", null: false
