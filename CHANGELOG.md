@@ -1,4 +1,4 @@
-# HEAD
+# v0.5.0 (2019-08-09)
 
 - feat(/projects): Archive project
 
