@@ -5,7 +5,15 @@ class Project < ApplicationRecord
   scope :active, ->{ where(archived_at: nil).order(:position) }
   scope :archived, ->{ where.not(archived_at: nil).order(:position) }
 
-  def archive
-    update(archived_at: Time.now, position: nil)
+  def archived
+    !!archived_at
+  end
+
+  def archived=(b)
+    if b == "1"
+      self.archived_at = Time.now
+    else
+      self.archived_at = nil
+    end
   end
 end

@@ -1,3 +1,7 @@
+# HEAD
+
+- feat(/projects): Archive project
+
 # v0.4.5 (2019-05-12)
 
 - feat(task editor): Set default value when creating interval tasks
