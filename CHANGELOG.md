@@ -1,3 +1,7 @@
+# v0.5.1 (2019-08-29)
+
+- security: Update nokogiri
+
 # v0.5.0 (2019-08-09)
 
 - feat(/projects): Archive project
