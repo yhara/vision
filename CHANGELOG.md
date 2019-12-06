@@ -1,3 +1,7 @@
+# v0.5.2 (2019-12-06)
+
+- security: Update rubyzip, puma, loofah
+
 # v0.5.1 (2019-08-29)
 
 - security: Update nokogiri
