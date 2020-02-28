@@ -1,3 +1,8 @@
+# v0.5.3 (2020-02-28)
+
+- security: Update rack, nokogiri
+- Update Ovto to 0.6.0.rc1
+
 # v0.5.2 (2019-12-06)
 
 - security: Update rubyzip, puma, loofah
