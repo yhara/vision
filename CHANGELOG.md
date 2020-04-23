@@ -1,3 +1,7 @@
+# HEAD
+
+- bundle update
+
 # v0.5.3 (2020-02-28)
 
 - security: Update rack, nokogiri
