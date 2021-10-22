@@ -1,4 +1,4 @@
-# HEAD
+# v0.5.4 (2021-10-22)
 
 - bundle update
 
