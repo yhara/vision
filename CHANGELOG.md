@@ -1,3 +1,7 @@
+# v0.5.5 (2022-03-21)
+
+- bundle update
+
 # v0.5.4 (2021-10-22)
 
 - bundle update
