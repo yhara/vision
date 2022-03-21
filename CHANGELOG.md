@@ -1,4 +1,8 @@
-# v0.5.5 (2022-03-21)
+# v0.5.5.1 (2022-03-21)
+
+- fix NameError on assets:precompile
+
+# v0.5.5 (2022-03-21) yanked
 
 - bundle update
 
