@@ -303,6 +303,7 @@ DEPENDENCIES
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1.4, >= 6.1.4.1)
   railties (~> 6.1.4, >= 6.1.4.1)
+  rake
   sass-rails (>= 6)
   selenium-webdriver
   shoulda-context
