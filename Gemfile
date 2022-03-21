@@ -57,5 +57,4 @@ end
 
 gem 'opal-rails'
 gem 'ovto' #, path: '../ovto'
-gem 'uglifier'
-gem 'mini_racer'
+gem 'terser'
