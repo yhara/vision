@@ -57,3 +57,4 @@ end
 
 gem 'opal-rails'
 gem 'ovto' #, path: '../ovto'
+gem 'uglifier'
