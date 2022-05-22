@@ -1,3 +1,7 @@
+# v0.5.6 (2022-05-22)
+
+- bundle update
+
 # v0.5.5.2 (2022-03-21)
 
 - fix NameError on assets:precompile
