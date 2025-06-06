@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'rails', '~> 7.0'
-gem 'railties', '~> 7.0'
+gem 'rails', '~> 7.1'
+gem 'railties', '~> 7.1'
 gem 'sqlite3', '~> 1.4'
 gem 'webrick'
 gem 'sass-rails', '>= 6'
@@ -52,7 +52,7 @@ group :development do
   gem 'capistrano-rbenv'
 end
 
-group :test do
+group :development, :test do
   gem 'shoulda-context'
   gem 'factory_bot_rails'
 end
